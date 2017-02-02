@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_deudas_pendientes"
+            android:icon="@drawable/ic_database_plus"
+            android:title="@string/titulo_deudas_pendiente" />
+        <item
+            android:id="@+id/nav_mis_deudas"
+            android:icon="@drawable/ic_database_minus"
+            android:title="@string/titulo_mis_deudas" />
+        <item
+            android:id="@+id/nav_resumen"
+            android:icon="@drawable/ic_file_chart"
+            android:title="@string/titulo_resumen" />
+        <item
+            android:id="@+id/nav_historial"
+            android:icon="@drawable/ic_clipboard_text"
+            android:title="@string/titulo_historial" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/titulo_amigos"
+            android:id="@+id/nav_amigos"
+            android:icon="@drawable/ic_account_multiple" />
+    </group>
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>

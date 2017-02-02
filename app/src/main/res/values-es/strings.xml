@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Acceder</string>
+    <string name="action_sign_in_short">Acceder</string>
+    <string name="error_invalid_email">Dirección no válida</string>
+    <string name="error_invalid_password">Contraseña demasiado corta</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_field_required">Campo requerido</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="registrarse">¿No tienes cuenta? Regístrate</string>
+    <string name="password_olvidado">Olvidé mi contraseña</string>
+
+    <!-- Registro -->
+    <string name="titulo_registro">Registro</string>
+    <string name="campo_nombre">Nombre</string>
+    <string name="campo_apellidos">Apellidos</string>
+    <string name="campo_email">Correo electrónico</string>
+    <string name="campo_password">Contraseña</string>
+    <string name="campo_email_repetir">Repetir correo electrónico</string>
+    <string name="campo_password_repetir">Repetir contraseña</string>
+    <string name="accion_aceptar">Acceptar</string>
+
+    <!-- Menu principal -->
+    <string name="title_activity_principal">DeudasPendientesActivity</string>
+
+    <string name="titulo_deudas_pendiente">Deudas de otros</string>
+    <string name="titulo_mis_deudas">Mis deudas</string>
+    <string name="titulo_historial">Historial</string>
+    <string name="titulo_resumen">Resumen</string>
+    <string name="titulo_amigos">Amigos</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
