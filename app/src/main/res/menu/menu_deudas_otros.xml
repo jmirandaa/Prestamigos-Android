@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:prestamigos="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Nueva deuda" />
+    <item android:title="@string/accion_nueva_deuda"
+        android:id="@+id/deudas_otros_nueva"
+        android:icon="@drawable/ic_database_plus_white"
+        prestamigos:showAsAction="ifRoom" />
+    <item android:title="@string/accion_buscar"
+        android:id="@+id/deudas_otros_buscar"
+        android:icon="@drawable/ic_magnify"
+        prestamigos:showAsAction="ifRoom" />
 </menu>

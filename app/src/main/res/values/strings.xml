@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Prestamigos</string>
 
-    <!-- Strings related to login -->
+    <!-- Login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
@@ -16,6 +16,7 @@
     <string name="registrarse">Dont have account? Register</string>
     <string name="password_olvidado">I forgot my password</string>
 
+    <!-- Registro -->
     <string name="titulo_registro">Register</string>
     <string name="campo_nombre">Name</string>
     <string name="campo_apellidos">Surname</string>
@@ -26,6 +27,7 @@
     <string name="accion_aceptar">Accept</string>
 
 
+    <!-- Menu lateral-->
     <string name="title_activity_principal">DeudasPendientesActivity</string>
 
     <string name="titulo_deudas_pendiente">Debts of others</string>
@@ -36,6 +38,18 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Tarjeta deuda-->
+    <string name="tarjeta_nombre">Javier Maestre</string>
+    <string name="tarjeta_fecha">31/01/2017</string>
+    <string name="tarjeta_concepto">Sushi</string>
+    <string name="tarjeta_valor">15€</string>
+    <string name="tarjeta_deuda_accion1">Pay off</string>
+    <string name="tarjeta_deuda_accion2">Increase</string>
+    <string name="otros_deuda_total">Total:</string>
+    <string name="otros_deuda_cantidad">20€</string>
+    <string name="accion_nueva_deuda">New debt</string>
+    <string name="accion_buscar">Search</string>
 
     <string name="action_settings">Settings</string>
 

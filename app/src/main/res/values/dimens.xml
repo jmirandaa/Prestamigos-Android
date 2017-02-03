@@ -7,4 +7,14 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Tarjeta deuda -->
+    <dimen name="tam_nombre">18sp</dimen>
+    <dimen name="tam_fecha">14sp</dimen>
+    <dimen name="paddin_fecha">2dp</dimen>
+    <dimen name="paddin_borde_tarjeta">16dp</dimen>
+    <dimen name="tam_concepto">16sp</dimen>
+    <dimen name="tam_cantidad">20sp</dimen>
+    <dimen name="paddin_cantidad_vertical">8dp</dimen>
+    <dimen name="tam_boton_accion">16sp</dimen>
 </resources>

@@ -28,7 +28,7 @@
     <!-- Menu principal -->
     <string name="title_activity_principal">DeudasPendientesActivity</string>
 
-    <string name="titulo_deudas_pendiente">Deudas de otros</string>
+    <string name="titulo_deudas_pendiente">Me deben</string>
     <string name="titulo_mis_deudas">Mis deudas</string>
     <string name="titulo_historial">Historial</string>
     <string name="titulo_resumen">Resumen</string>
@@ -36,6 +36,18 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Tarjeta deuda-->
+    <string name="tarjeta_nombre">Javier Maestre</string>
+    <string name="tarjeta_fecha">31/01/2017</string>
+    <string name="tarjeta_concepto">Sushi</string>
+    <string name="tarjeta_valor">15€</string>
+    <string name="tarjeta_deuda_accion1">Saldar</string>
+    <string name="tarjeta_deuda_accion2">Incrementar</string>
+    <string name="otros_deuda_total">Total:</string>
+    <string name="otros_deuda_cantidad">20€</string>
+    <string name="accion_nueva_deuda">Nueva deuda</string>
+    <string name="accion_buscar">Buscar</string>
 
     <string name="action_settings">Settings</string>
 </resources>

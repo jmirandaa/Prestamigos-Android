@@ -4,11 +4,22 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
+
+import es.jma.prestamigos.adaptadores.DeudaAdapter;
+import es.jma.prestamigos.dominio.Deuda;
 
 
 /**
@@ -29,6 +40,8 @@ public class DeudasOtrosFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private SearchView searchView;
+    private ActionBar actionBar;
     private OnFragmentInteractionListener mListener;
 
     public DeudasOtrosFragment() {
@@ -67,7 +80,46 @@ public class DeudasOtrosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_deudas_otros, container, false);
+        View v = inflater.inflate(R.layout.fragment_deudas_otros, container, false);
+
+        //Cambiar título
+        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle(R.string.titulo_deudas_pendiente);
+
+        // Barra de búsqueda
+        searchView = (SearchView) v.findViewById(R.id.searchDeudasOtros);
+        searchView.setVisibility(View.GONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Si el texto está vacío, ocultar caja
+                if (newText.isEmpty())
+                {
+                    searchView.setVisibility(View.GONE);
+                    actionBar.show();
+                }
+                return false;
+            }
+        });
+
+        //Rellenar lista
+        RecyclerView rv = (RecyclerView)v.findViewById(R.id.rv_deudas);
+        rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        List<Deuda> deudas = Deuda.getDatosPrueba();
+
+        DeudaAdapter adapter = new DeudaAdapter(deudas);
+        rv.setAdapter(adapter);
+
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -114,6 +166,22 @@ public class DeudasOtrosFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.menu_deudas_otros, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.deudas_otros_buscar:
+                searchView.setVisibility(View.VISIBLE);
+                actionBar.hide();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 }
