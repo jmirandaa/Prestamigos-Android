@@ -24,7 +24,8 @@
                 card_view:srcCompat="@drawable/default_profile_small"
                 android:id="@+id/imagePeque"
                 android:layout_marginLeft="185dp"
-                android:layout_marginTop="@dimen/fab_margin" />
+                android:layout_marginTop="@dimen/fab_margin"
+                android:contentDescription="@string/titulo_amigos" />
 
             <LinearLayout
                 android:orientation="vertical"

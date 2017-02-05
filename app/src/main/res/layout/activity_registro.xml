@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="es.jma.prestamigos.RegistroActivity">
+    tools:context="es.jma.prestamigos.RegistroActivity"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,11 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/formulario_registro_layout"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:id="@+id/formulario_registro_layout">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -31,17 +29,16 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:id="@+id/imagen_layout"
-                    android:background="@drawable/fondo_registro"
+                    android:background="@color/colorGreyLight"
                     android:layout_height="95dp"
                     android:layout_marginBottom="20dp">
 
                     <ImageView
-                        app:srcCompat="@drawable/default_profile"
+                        app:srcCompat="@drawable/ic_account"
                         android:id="@+id/imageView3"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp" />
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="95dp" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:layout_width="wrap_content"
@@ -51,7 +48,7 @@
                         app:srcCompat="@drawable/ic_camera"
                         android:id="@+id/floatingActionButton"
                         android:layout_marginTop="55dp"
-                        android:layout_marginLeft="55dp"
+                        android:layout_marginLeft="230dp"
                         app:backgroundTint="@android:color/holo_red_light"
                         app:pressedTranslationZ="@dimen/padding_icon_field" />
 
@@ -59,91 +56,102 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_nombre"
-                    android:id="@+id/registro_nombre"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_account_star"
-                    android:inputType="textPersonName" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_nombre"
+                        android:id="@+id/registro_nombre"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textPersonName"
+                        android:drawableStart="@drawable/ic_account_star" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_apellidos"
-                    android:id="@+id/registro_apellidos"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_account_star_variant"
-                    android:inputType="textPersonName" />
+                    android:layout_height="match_parent">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_apellidos"
+                        android:id="@+id/registro_apellidos"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textPersonName"
+                        android:drawableStart="@drawable/ic_account_star_variant" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_email"
-                    android:id="@+id/registro_email"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_email"
-                    android:inputType="textEmailAddress" />
+                    android:layout_height="match_parent">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_email"
+                        android:id="@+id/registro_email"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textEmailAddress"
+                        android:drawableStart="@drawable/ic_email" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_email_repetir"
-                    android:id="@+id/registro_email_repetir"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_email_alert"
-                    android:inputType="textEmailAddress" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent">
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_email_repetir"
+                        android:id="@+id/registro_email_repetir"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textEmailAddress"
+                        android:drawableStart="@drawable/ic_email_alert" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_password"
-                    android:id="@+id/registro_password"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_lock"
-                    android:inputType="textPassword" />
+                    android:layout_height="match_parent">
 
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_password"
+                        android:id="@+id/registro_password"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textPassword"
+                        android:drawableStart="@drawable/ic_lock" />
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/campo_password_repetir"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_lock_plus"
-                    android:inputType="textPassword" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/campo_password_repetir"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:inputType="textPassword"
+                        android:drawableStart="@drawable/ic_lock_plus" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

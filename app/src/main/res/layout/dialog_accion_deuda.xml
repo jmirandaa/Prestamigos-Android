@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/campo_cantidad"
+            android:hint="@string/dialogo_cantidad"
+            android:inputType="numberDecimal"
+            android:layout_marginTop="@dimen/paddin_cantidad_vertical"
+            android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
+            android:layout_marginLeft="@dimen/paddin_cantidad_vertical"
+            android:layout_marginRight="@dimen/paddin_cantidad_vertical" />
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>

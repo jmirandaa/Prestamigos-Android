@@ -1,9 +1,11 @@
 package es.jma.prestamigos;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +21,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import es.jma.prestamigos.adaptadores.DeudaAdapter;
+import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.Deuda;
+import es.jma.prestamigos.utils.ui.UtilUI;
 
 
 /**
@@ -33,11 +37,11 @@ import es.jma.prestamigos.dominio.Deuda;
 public class DeudasOtrosFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    public static final String TIPO_DEUDA = "tipoDeuda";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int tipoDeuda;
     private String mParam2;
 
     private SearchView searchView;
@@ -57,10 +61,10 @@ public class DeudasOtrosFragment extends Fragment {
      * @return A new instance of fragment DeudasOtrosFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DeudasOtrosFragment newInstance(String param1, String param2) {
+    public static DeudasOtrosFragment newInstance(int param1, String param2) {
         DeudasOtrosFragment fragment = new DeudasOtrosFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putInt(TIPO_DEUDA, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -70,7 +74,7 @@ public class DeudasOtrosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            tipoDeuda = getArguments().getInt(TIPO_DEUDA);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
@@ -84,11 +88,26 @@ public class DeudasOtrosFragment extends Fragment {
 
         //Cambiar título
         actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle(R.string.titulo_deudas_pendiente);
+        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
+            actionBar.setTitle(R.string.titulo_deudas_pendiente);
+        }
+        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        {
+            actionBar.setTitle(R.string.titulo_mis_deudas);
+        }
 
         // Barra de búsqueda
         searchView = (SearchView) v.findViewById(R.id.searchDeudasOtros);
         searchView.setVisibility(View.GONE);
+
+        /* Al cerrar, hacer visible*/
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                UtilUI.toggleSearchView(actionBar, searchView);
+                return false;
+            }
+        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -99,11 +118,10 @@ public class DeudasOtrosFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //Si el texto está vacío, ocultar caja
+                //Si el texto está vacío, buscar todo
                 if (newText.isEmpty())
                 {
-                    searchView.setVisibility(View.GONE);
-                    actionBar.show();
+
                 }
                 return false;
             }
@@ -165,7 +183,10 @@ public class DeudasOtrosFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        inflater.inflate(R.menu.menu_deudas_otros, menu);
+
+        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
+            inflater.inflate(R.menu.menu_deudas_otros, menu);
+        }
 
     }
 
@@ -175,10 +196,24 @@ public class DeudasOtrosFragment extends Fragment {
 
         switch (id)
         {
+            //Botón de buscar, activar barra de búsqueda
             case R.id.deudas_otros_buscar:
-                searchView.setVisibility(View.VISIBLE);
-                actionBar.hide();
+                UtilUI.toggleSearchView(actionBar, searchView);
                 return true;
+            //Botón de nueva deuda, crear nueva actividad
+            case R.id.deudas_otros_nueva:
+
+                Intent intent = new Intent(getActivity(), NuevaDeudaActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(TIPO_DEUDA,tipoDeuda);
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                /*FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment fragment = new AmigosFragment();
+                ft.replace(R.id.mainFrame, fragment);
+                ft.commit();
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

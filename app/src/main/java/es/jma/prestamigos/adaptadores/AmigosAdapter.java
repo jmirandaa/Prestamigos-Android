@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +21,11 @@ import es.jma.prestamigos.dominio.Deuda;
  * Created by tulon on 3/02/17.
  */
 
-public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHolder> {
-    private DeudaAdapter instance;
+public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.DeudaViewHolder> {
+    private AmigosAdapter instance;
     private List<Deuda> deudas;
 
-    public DeudaAdapter(List<Deuda> deudas)
+    public AmigosAdapter(List<Deuda> deudas)
     {
         this.instance = this;
         this.deudas = deudas;

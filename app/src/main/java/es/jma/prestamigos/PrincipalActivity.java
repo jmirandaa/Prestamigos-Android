@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import es.jma.prestamigos.constantes.KPantallas;
+
 public class PrincipalActivity extends AppCompatActivity
         implements AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,6 +45,11 @@ public class PrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Por defecto cargar la primera opción
+        MenuItem menuItem = navigationView.getMenu().getItem(0);
+        menuItem.setChecked(true);
+        onNavigationItemSelected(menuItem);
     }
 
     @Override
@@ -87,10 +94,23 @@ public class PrincipalActivity extends AppCompatActivity
 
         if (id == R.id.nav_deudas_pendientes) {
             fragment = new DeudasOtrosFragment();
+            Bundle params = new Bundle();
+            params.putInt(DeudasOtrosFragment.TIPO_DEUDA, KPantallas.PANTALLA_DEUDAS_OTROS);
+            fragment.setArguments(params);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, fragment);
+            //ft.addToBackStack(null);
             ft.commit();
+
         } else if (id == R.id.nav_mis_deudas) {
+            fragment = new DeudasOtrosFragment();
+            Bundle params = new Bundle();
+            params.putInt(DeudasOtrosFragment.TIPO_DEUDA, KPantallas.PANTALLA_MIS_DEUDAS);
+            fragment.setArguments(params);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            //ft.addToBackStack(null);
+            ft.commit();
 
         } else if (id == R.id.nav_resumen) {
 
@@ -117,4 +137,6 @@ public class PrincipalActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }
