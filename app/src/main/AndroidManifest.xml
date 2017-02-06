@@ -33,7 +33,12 @@
         <activity
             android:name=".NuevaDeudaActivity"
             android:label="@string/titulo_nueva_deuda"
-            android:parentActivityName=".PrincipalActivity"></activity>
+            android:parentActivityName=".PrincipalActivity" />
+        <activity
+            android:name=".DetallesAmigoActivity"
+            android:label="@string/titulo_detalles_amigo"
+            android:parentActivityName=".DetallesAmigoActivity"
+            ></activity>
     </application>
 
 </manifest>

@@ -65,6 +65,17 @@
     <string name="campo_cantidad">Quantity</string>
     <string name="accion_anyadir">Add</string>
 
+    <!-- Detalles amigo-->
+    <string name="add_friend">Add new friend</string>
+    <string name="titulo_detalles_amigo">Friend</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_deudas_totales">Total debts</string>
+    <string name="dashboard_medeben">They owe me</string>
+    <string name="dashboard_debo">I owe</string>
+    <string name="dashboard_numero_medeben">Debts owed me</string>
+    <string name="dashboard_numero_debo">Debts that I owe</string>
+
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->

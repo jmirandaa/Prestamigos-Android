@@ -1,6 +1,8 @@
 package es.jma.prestamigos.dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by tulon on 3/02/17.
@@ -29,6 +31,16 @@ public class Usuario {
         this.email = email;
         this.nombre = nombre;
         this.apellidos = apellidos;
+    }
+
+    //Datos de prueba
+    public static List<Usuario> getDatosPrueba()
+    {
+        List<Usuario> amigos = new ArrayList<>();
+        amigos.add(new Usuario(1,"inv@invitados.com", "Javier", "Maestre"));
+        amigos.add(new Usuario(2,"inv@invitados.com", "Jack", "O'Neill"));
+        amigos.add(new Usuario(3,"inv@invitados.com", "John", "Carter"));
+        return amigos;
     }
 
     //Getters y setters

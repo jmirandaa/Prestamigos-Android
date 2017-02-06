@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -175,7 +174,6 @@ public class DeudasOtrosFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -185,6 +183,10 @@ public class DeudasOtrosFragment extends Fragment {
         menu.clear();
 
         if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
+            inflater.inflate(R.menu.menu_deudas_otros, menu);
+        }
+        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        {
             inflater.inflate(R.menu.menu_deudas_otros, menu);
         }
 

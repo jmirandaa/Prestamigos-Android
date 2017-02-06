@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import es.jma.prestamigos.constantes.KPantallas;
 
 public class PrincipalActivity extends AppCompatActivity
-        implements AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        implements DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +27,6 @@ public class PrincipalActivity extends AppCompatActivity
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,12 +65,9 @@ public class PrincipalActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        //int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -99,7 +87,6 @@ public class PrincipalActivity extends AppCompatActivity
             fragment.setArguments(params);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, fragment);
-            //ft.addToBackStack(null);
             ft.commit();
 
         } else if (id == R.id.nav_mis_deudas) {
@@ -109,11 +96,13 @@ public class PrincipalActivity extends AppCompatActivity
             fragment.setArguments(params);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, fragment);
-            //ft.addToBackStack(null);
             ft.commit();
 
         } else if (id == R.id.nav_resumen) {
-
+            fragment = new DashboardFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
         } else if (id == R.id.nav_historial) {
 
         } else if (id == R.id.nav_amigos) {

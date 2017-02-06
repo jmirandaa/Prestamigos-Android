@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:prestamigos="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Nuevo amigo" />
+    <item android:title="@string/add_friend"
+        prestamigos:showAsAction="ifRoom"
+        android:icon="@drawable/ic_account_plus" />
 </menu>

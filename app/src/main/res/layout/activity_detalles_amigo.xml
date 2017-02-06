@@ -2,24 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_registro"
+    android:id="@+id/activity_detalles_amigo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="es.jma.prestamigos.RegistroActivity"
+    tools:context="es.jma.prestamigos.DetallesAmigoActivity"
     android:focusable="true"
     android:focusableInTouchMode="true">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/formulario_registro">
+        android:id="@+id/formulario_amigo">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/formulario_registro_layout">
+            android:id="@+id/formulario_amigo_layout">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -35,23 +35,11 @@
 
                     <ImageView
                         app:srcCompat="@drawable/ic_account"
-                        android:id="@+id/imageView3"
+                        android:id="@+id/imagenDetalleAmigo"
                         android:layout_height="match_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_width="95dp"
-                        android:contentDescription="@string/campo_nombre_amigo" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        app:fabSize="mini"
-                        app:srcCompat="@drawable/ic_camera"
-                        android:id="@+id/floatingActionButton"
-                        android:layout_marginTop="55dp"
-                        android:layout_marginLeft="230dp"
-                        app:backgroundTint="@android:color/holo_red_light"
-                        app:pressedTranslationZ="@dimen/padding_icon_field" />
+                        android:contentDescription="@string/titulo_detalles_amigo" />
 
 
                 </RelativeLayout>
@@ -74,10 +62,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/campo_nombre"
-                        android:id="@+id/registro_nombre"
+                        android:id="@+id/detalles_amigo_nombre"
                         android:drawablePadding="@dimen/padding_icon_field"
                         android:inputType="textPersonName"
                         android:drawableStart="@drawable/ic_account_star"
+                        android:enabled="false"
                         android:drawableLeft="@drawable/ic_account_star" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -89,10 +78,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/campo_apellidos"
-                        android:id="@+id/registro_apellidos"
+                        android:id="@+id/detalles_amigo_apellidos"
                         android:drawablePadding="@dimen/padding_icon_field"
                         android:inputType="textPersonName"
                         android:drawableStart="@drawable/ic_account_star_variant"
+                        android:enabled="false"
                         android:drawableLeft="@drawable/ic_account_star_variant" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -105,58 +95,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/campo_email"
-                        android:id="@+id/registro_email"
+                        android:id="@+id/detalles_amigo_email"
                         android:drawablePadding="@dimen/padding_icon_field"
                         android:inputType="textEmailAddress"
                         android:drawableStart="@drawable/ic_email"
+                        android:enabled="false"
                         android:drawableLeft="@drawable/ic_email" />
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/campo_email_repetir"
-                        android:id="@+id/registro_email_repetir"
-                        android:drawablePadding="@dimen/padding_icon_field"
-                        android:inputType="textEmailAddress"
-                        android:drawableStart="@drawable/ic_email_alert"
-                        android:drawableLeft="@drawable/ic_email_alert" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/campo_password"
-                        android:id="@+id/registro_password"
-                        android:drawablePadding="@dimen/padding_icon_field"
-                        android:inputType="textPassword"
-                        android:drawableStart="@drawable/ic_lock"
-                        android:drawableLeft="@drawable/ic_lock" />
-
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/campo_password_repetir"
-                        android:drawablePadding="@dimen/padding_icon_field"
-                        android:inputType="textPassword"
-                        android:drawableStart="@drawable/ic_lock_plus"
-                        android:drawableLeft="@drawable/ic_lock_plus" />
-                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
         </LinearLayout>
