@@ -1,12 +1,9 @@
 package es.jma.prestamigos;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -16,12 +13,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
+import butterknife.BindView;
 import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.Deuda;
+import es.jma.prestamigos.navegacion.BaseFragment;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 
@@ -33,18 +33,19 @@ import es.jma.prestamigos.utils.ui.UtilUI;
  * Use the {@link DeudasOtrosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DeudasOtrosFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class DeudasOtrosFragment extends BaseFragment {
+
+    //Parámetro
     public static final String TIPO_DEUDA = "tipoDeuda";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private int tipoDeuda;
-    private String mParam2;
 
-    private SearchView searchView;
-    private ActionBar actionBar;
+    @BindView(R.id.deudas_total)
+    TextView tvTotal;
+    @BindView(R.id.searchDeudasOtros)
+    SearchView searchView;
+    @BindView(R.id.rv_deudas)
+    RecyclerView rv;
+
     private OnFragmentInteractionListener mListener;
 
     public DeudasOtrosFragment() {
@@ -56,15 +57,13 @@ public class DeudasOtrosFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment DeudasOtrosFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DeudasOtrosFragment newInstance(int param1, String param2) {
+    public static DeudasOtrosFragment newInstance(int param1) {
         DeudasOtrosFragment fragment = new DeudasOtrosFragment();
         Bundle args = new Bundle();
         args.putInt(TIPO_DEUDA, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,7 +73,6 @@ public class DeudasOtrosFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             tipoDeuda = getArguments().getInt(TIPO_DEUDA);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
         setHasOptionsMenu(true);
     }
@@ -83,27 +81,26 @@ public class DeudasOtrosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_deudas_otros, container, false);
+
+        View v = getView(inflater,R.layout.fragment_deudas_otros,container);
 
         //Cambiar título
-        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
-            actionBar.setTitle(R.string.titulo_deudas_pendiente);
+            getActionBar().setTitle(R.string.titulo_deudas_pendiente);
         }
         else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
         {
-            actionBar.setTitle(R.string.titulo_mis_deudas);
+            getActionBar().setTitle(R.string.titulo_mis_deudas);
         }
 
         // Barra de búsqueda
-        searchView = (SearchView) v.findViewById(R.id.searchDeudasOtros);
         searchView.setVisibility(View.GONE);
 
         /* Al cerrar, hacer visible*/
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                UtilUI.toggleSearchView(actionBar, searchView);
+                UtilUI.toggleSearchView(getActionBar(), searchView);
                 return false;
             }
         });
@@ -127,19 +124,21 @@ public class DeudasOtrosFragment extends Fragment {
         });
 
         //Rellenar lista
-        RecyclerView rv = (RecyclerView)v.findViewById(R.id.rv_deudas);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         List<Deuda> deudas = Deuda.getDatosPrueba();
 
         DeudaAdapter adapter = new DeudaAdapter(deudas);
         rv.setAdapter(adapter);
 
-
+        //Otros
+        tvTotal.setFocusable(true);
+        tvTotal.setFocusableInTouchMode(true);
+        tvTotal.requestFocusFromTouch();
+        tvTotal.requestFocus();
 
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -200,22 +199,15 @@ public class DeudasOtrosFragment extends Fragment {
         {
             //Botón de buscar, activar barra de búsqueda
             case R.id.deudas_otros_buscar:
-                UtilUI.toggleSearchView(actionBar, searchView);
+                UtilUI.toggleSearchView(getActionBar(), searchView);
                 return true;
             //Botón de nueva deuda, crear nueva actividad
             case R.id.deudas_otros_nueva:
 
-                Intent intent = new Intent(getActivity(), NuevaDeudaActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(TIPO_DEUDA,tipoDeuda);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                start(NuevaDeudaActivity.class, bundle);
 
-                /*FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                Fragment fragment = new AmigosFragment();
-                ft.replace(R.id.mainFrame, fragment);
-                ft.commit();
-                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

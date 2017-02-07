@@ -53,6 +53,7 @@
     <string name="accion_nueva_deuda">New debt</string>
     <string name="accion_buscar">Search</string>
     <string name="sugerencia_busqueda_deuda">Name of the person</string>
+    <string name="detalles_deuda_titulo">Debt details</string>
 
     <!-- Dialogo deuda -->
     <string name="dialogo_cantidad">Quantity</string>
@@ -75,6 +76,15 @@
     <string name="dashboard_debo">I owe</string>
     <string name="dashboard_numero_medeben">Debts owed me</string>
     <string name="dashboard_numero_debo">Debts that I owe</string>
+
+    <!-- Operacion -->
+    <string name="op_tipo">Paid</string>
+    <string name="op_fecha">01/02/2017</string>
+    <string name="op_valor">5€</string>
+
+    <!-- Detalles deuda -->
+    <string name="detalles_deuda_total">Total</string>
+    <string name="detalles_deuda_pagado">Paid</string>
 
     <string name="action_settings">Settings</string>
 

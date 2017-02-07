@@ -1,10 +1,11 @@
 package es.jma.prestamigos.adaptadores;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import es.jma.prestamigos.DetallesDeudaActivity;
 import es.jma.prestamigos.R;
 import es.jma.prestamigos.constantes.KAccion;
 import es.jma.prestamigos.dominio.Deuda;
@@ -92,6 +94,21 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                 public void onClick(View v) {
                     //Abrir diálogo
                     abrirDialogoCantidad(v, KAccion.ACCION_AUMENTAR);
+                }
+            });
+
+            //Acción al tocar
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int posicion = getAdapterPosition();
+
+                    //Contexto
+                    Context context = v.getContext();
+
+                    //Entrar en detalles
+                    Intent intent = new Intent(context, DetallesDeudaActivity.class);
+                    context.startActivity(intent);
                 }
             });
 

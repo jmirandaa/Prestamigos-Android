@@ -15,11 +15,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import butterknife.BindView;
+import es.jma.prestamigos.navegacion.BaseActivity;
+
 import static es.jma.prestamigos.DeudasOtrosFragment.TIPO_DEUDA;
 
-public class NuevaDeudaActivity extends AppCompatActivity {
+public class NuevaDeudaActivity extends BaseActivity {
     private int tipoDeuda = -1;
-    private SearchView searchView;
+
+    @BindView(R.id.searchNuevaDeuda)
+    SearchView searchView;
     private  SimpleCursorAdapter mAdapter;
 
     private static final String[] SUGGESTIONS = {
@@ -65,7 +70,6 @@ public class NuevaDeudaActivity extends AppCompatActivity {
         }
 
         //Barra de búsqueda
-        searchView = (SearchView) findViewById(R.id.searchNuevaDeuda);
         searchView.setIconified(false);
         searchView.clearFocus();
 

@@ -6,11 +6,11 @@
     tools:context="es.jma.prestamigos.DeudasOtrosFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.SearchView
             android:layout_width="match_parent"
@@ -18,47 +18,59 @@
             android:id="@+id/searchDeudasOtros"
             app:queryHint="@string/sugerencia_busqueda_deuda" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/otros_deuda_total"
-                android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
-                android:paddingTop="@dimen/paddin_cantidad_vertical"
-                android:paddingBottom="@dimen/paddin_cantidad_vertical"
-                android:layout_weight="1"
-                android:textSize="@dimen/tam_boton_accion"
-                android:paddingLeft="@dimen/paddin_cantidad_vertical"
-                android:paddingRight="@dimen/paddin_cantidad_vertical"
-                android:textColor="@android:color/black" />
+                tools:ignore="UselessParent">
 
-            <TextView
-                android:text="@string/otros_deuda_cantidad"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_weight="1"
-                android:textSize="@dimen/tam_boton_accion"
-                android:textAlignment="textEnd"
-                android:paddingTop="@dimen/paddin_cantidad_vertical"
-                android:paddingBottom="@dimen/paddin_cantidad_vertical"
-                android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
-                android:paddingRight="@dimen/paddin_cantidad_vertical"
-                android:paddingLeft="@dimen/paddin_cantidad_vertical"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-        </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rv_deudas" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/otros_deuda_total"
+                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
+                        android:paddingTop="@dimen/paddin_cantidad_vertical"
+                        android:paddingBottom="@dimen/paddin_cantidad_vertical"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/tam_boton_accion"
+                        android:paddingLeft="@dimen/paddin_cantidad_vertical"
+                        android:paddingRight="@dimen/paddin_cantidad_vertical"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
+                        android:text="@string/otros_deuda_cantidad"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/deudas_total"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/tam_boton_accion"
+                        android:textAlignment="textEnd"
+                        android:paddingTop="@dimen/paddin_cantidad_vertical"
+                        android:paddingBottom="@dimen/paddin_cantidad_vertical"
+                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
+                        android:paddingRight="@dimen/paddin_cantidad_vertical"
+                        android:paddingLeft="@dimen/paddin_cantidad_vertical"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/rv_deudas" />
 
 
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </FrameLayout>

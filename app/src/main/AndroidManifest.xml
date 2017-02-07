@@ -37,8 +37,13 @@
         <activity
             android:name=".DetallesAmigoActivity"
             android:label="@string/titulo_detalles_amigo"
-            android:parentActivityName=".DetallesAmigoActivity"
-            ></activity>
+            android:parentActivityName=".DetallesAmigoActivity" />
+        <activity
+            android:name=".DetallesDeudaActivity"
+            android:label="@string/detalles_deuda_titulo"
+            android:parentActivityName=".DetallesDeudaActivity">
+
+        </activity>
     </application>
 
 </manifest>

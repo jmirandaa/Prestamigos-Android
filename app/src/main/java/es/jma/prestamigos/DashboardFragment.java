@@ -5,19 +5,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import es.jma.prestamigos.navegacion.BaseFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends BaseFragment {
 
-    private ActionBar actionBar;
     private OnFragmentInteractionListener mListener;
 
     public DashboardFragment() {
@@ -35,11 +34,10 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View v = getView(inflater,R.layout.fragment_dashboard,container);
 
         //Cambiar título
-        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle(R.string.titulo_resumen);
+        getActionBar().setTitle(R.string.titulo_resumen);
 
         return v;
     }

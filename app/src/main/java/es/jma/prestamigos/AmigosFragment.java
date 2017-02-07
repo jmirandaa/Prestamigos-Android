@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import butterknife.BindView;
 import es.jma.prestamigos.adaptadores.AmigosAdapter;
 import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.navegacion.BaseFragment;
 
 
 /**
@@ -28,13 +30,11 @@ import es.jma.prestamigos.dominio.Usuario;
  * {@link AmigosFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class AmigosFragment extends Fragment {
+public class AmigosFragment extends BaseFragment {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.rv_amigos)
+    RecyclerView rv;
 
-    private ActionBar actionBar;
     private OnFragmentInteractionListener mListener;
 
     public AmigosFragment() {
@@ -51,14 +51,12 @@ public class AmigosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_amigos, container, false);
+        View v = getView(inflater,R.layout.fragment_amigos,container);
 
         //Cambiar título
-        actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle(R.string.titulo_amigos);
+        getActionBar().setTitle(R.string.titulo_amigos);
 
         //Rellenar lista
-        RecyclerView rv = (RecyclerView)v.findViewById(R.id.rv_amigos);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         List<Usuario> amigos = Usuario.getDatosPrueba();
 
@@ -68,7 +66,6 @@ public class AmigosFragment extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
