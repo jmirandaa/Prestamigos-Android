@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,97 +9,105 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="es.jma.prestamigos.LoginActivity">
+    tools:context="es.jma.prestamigos.LoginActivity"
+    android:id="@+id/coordinator_login">
 
     <!-- Login progress -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:srcCompat="@drawable/icono_principal"
-        android:id="@+id/imageView2"
-        android:contentDescription="@string/app_name" />
-
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
-    <ScrollView
-        android:id="@+id/login_form"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/email_login_form"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/icono_principal"
+            android:id="@+id/imageView2"
+            android:contentDescription="@string/app_name" />
+
+        <ProgressBar
+            android:id="@+id/login_progress"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="30dp">
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
-            <android.support.design.widget.TextInputLayout
+        <ScrollView
+            android:id="@+id/login_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="30dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/email"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:drawableLeft="@drawable/ic_email" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionId="@+id/login"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:drawablePadding="@dimen/padding_icon_field"
+                        android:drawableStart="@drawable/ic_lock"
+                        android:drawableLeft="@drawable/ic_lock" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/email_sign_in_button"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:drawableStart="@drawable/ic_email"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableLeft="@drawable/ic_email" />
+                    android:layout_marginTop="16dp"
+                    android:text="@string/action_sign_in"
+                    android:textStyle="bold" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password"
+                <TextView
+                    android:text="@string/registrarse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:drawablePadding="@dimen/padding_icon_field"
-                    android:drawableStart="@drawable/ic_lock"
-                    android:drawableLeft="@drawable/ic_lock" />
+                    android:id="@+id/textViewRegistro"
+                    android:gravity="center_horizontal" />
 
-            </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:text="@string/password_olvidado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewOlvidado"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="50dp" />
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 
-            <TextView
-                android:text="@string/registrarse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewRegistro"
-                android:gravity="center_horizontal" />
-
-            <TextView
-                android:text="@string/password_olvidado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textViewOlvidado"
-                android:gravity="center_horizontal"
-                android:paddingTop="50dp" />
-
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

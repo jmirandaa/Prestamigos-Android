@@ -1,5 +1,7 @@
 package es.jma.prestamigos.dominio;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
  * Created by tulon on 3/02/17.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Usuario {
     //Atributos
     private long id;

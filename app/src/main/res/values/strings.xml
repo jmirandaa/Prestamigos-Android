@@ -53,7 +53,7 @@
     <string name="accion_nueva_deuda">New debt</string>
     <string name="accion_buscar">Search</string>
     <string name="sugerencia_busqueda_deuda">Name of the person</string>
-    <string name="detalles_deuda_titulo">Debt details</string>
+    <string name="detalles_deuda_titulo">Historic</string>
 
     <!-- Dialogo deuda -->
     <string name="dialogo_cantidad">Quantity</string>
@@ -81,6 +81,8 @@
     <string name="op_tipo">Paid</string>
     <string name="op_fecha">01/02/2017</string>
     <string name="op_valor">5€</string>
+    <string name="op_tipo_pagar">Paid</string>
+    <string name="op_tipo_aumentar">Increased</string>
 
     <!-- Detalles deuda -->
     <string name="detalles_deuda_total">Total</string>
@@ -92,4 +94,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">Accept</string>
     <string name="cancelar">Cancel</string>
+
+
+    <!-- Mensajes de error -->
+    <string name="msg_error_login">Email or password incorrect</string>
+    <string name="msg_error_conexion">Connection error</string>
 </resources>

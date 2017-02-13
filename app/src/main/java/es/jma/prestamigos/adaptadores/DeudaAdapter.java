@@ -76,6 +76,7 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
             concepto = (TextView)itemView.findViewById(R.id.deuda_concepto);
             cantidad = (TextView)itemView.findViewById(R.id.deuda_cantidad);
             //personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            boolean saldada = false;
 
             //Acción de los botones
             accion1 = (Button)itemView.findViewById(R.id.deuda_accion1);
@@ -111,6 +112,18 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                     context.startActivity(intent);
                 }
             });
+
+            //Si la deuda ha slido saldada, ocultar botones
+            if (saldada)
+            {
+                accion1.setVisibility(View.GONE);
+                accion2.setVisibility(View.GONE);
+            }
+            else
+            {
+                accion1.setVisibility(View.VISIBLE);
+                accion2.setVisibility(View.VISIBLE);
+            }
 
         }
 

@@ -16,7 +16,7 @@ import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.navegacion.BaseActivity;
 
 public class PrincipalActivity extends BaseActivity
-        implements DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        implements HistorialFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -91,7 +91,7 @@ public class PrincipalActivity extends BaseActivity
         }
         //Cambiar al fragmento de historial
         else if (id == R.id.nav_historial) {
-
+            changeFragment(new HistorialFragment(), R.id.mainFrame, null);
         }
         //Cambiar al fragmento de amigos
         else if (id == R.id.nav_amigos) {

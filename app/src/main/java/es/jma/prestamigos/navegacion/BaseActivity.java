@@ -49,6 +49,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void start(Class<? extends BaseActivity> activity, int reqCode) {
+        startActivityForResult(new Intent(this, activity),reqCode);
+    }
+
     /**
      * Devolver la barra de acción inicializada
      * @return
