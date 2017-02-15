@@ -40,6 +40,7 @@ import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.enums.TipoDeuda;
 import es.jma.prestamigos.eventbus.EventDeudas;
 import es.jma.prestamigos.navegacion.BaseFragment;
+import es.jma.prestamigos.utils.ui.UtilSuma;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 
@@ -120,15 +121,6 @@ public class DeudasOtrosFragment extends BaseFragment {
 
         View v = getView(inflater,R.layout.fragment_deudas_otros,container);
 
-        //Cambiar título
-        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
-            getActionBar().setTitle(R.string.titulo_deudas_pendiente);
-        }
-        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
-        {
-            getActionBar().setTitle(R.string.titulo_mis_deudas);
-        }
-
         // Barra de búsqueda
         searchView.setVisibility(View.GONE);
 
@@ -167,13 +159,21 @@ public class DeudasOtrosFragment extends BaseFragment {
         DeudaAdapter adapter = new DeudaAdapter(deudas);
         rv.setAdapter(adapter);
 
-        actualizarDeudas();
-
         //Otros
         tvTotal.setFocusable(true);
         tvTotal.setFocusableInTouchMode(true);
         tvTotal.requestFocusFromTouch();
         tvTotal.requestFocus();
+
+        //Cambiar título y actualizar lista
+        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
+            getActionBar().setTitle(R.string.titulo_deudas_pendiente);
+        }
+        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        {
+            getActionBar().setTitle(R.string.titulo_mis_deudas);
+        }
+        actualizarDeudas();
 
         return v;
     }
@@ -187,10 +187,23 @@ public class DeudasOtrosFragment extends BaseFragment {
 
         SharedPreferences shared = getContext().getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
         long idUsuario = shared.getLong(CLAVE_ID,-1);
+        TipoDeuda tipo = TipoDeuda.TODAS;
+
+        //Ver tipo deudas
+        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS)
+        {
+            tipo = TipoDeuda.DEBEN;
+        }
+        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        {
+            tipo = TipoDeuda.DEBO;
+        }
+
+        //Conectarse
         if (idUsuario != -1)
         {
             showProgress(true);
-            deudas.ejecutar(idUsuario, TipoDeuda.DEBEN, false);
+            deudas.ejecutar(idUsuario, tipo, false);
         }
     }
 
@@ -276,7 +289,6 @@ public class DeudasOtrosFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventDeudas(EventDeudas event) {
         List<Deuda> deudas = event.getDeudas();
-        showProgress(false);
 
         //Si no existe, informar
         if (event.getCodigo() == 1)
@@ -297,6 +309,12 @@ public class DeudasOtrosFragment extends BaseFragment {
             adapter.setDeudas(deudas);
             adapter.notifyDataSetChanged();
         }
+
+        //Actualizar suma
+        double suma = UtilSuma.sumarDeudas(deudas);
+        tvTotal.setText(String.valueOf(suma) +" €");
+
+        showProgress(false);
 
     };
 
