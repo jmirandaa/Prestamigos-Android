@@ -34,6 +34,14 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
         this.deudas = deudas;
     }
 
+    public List<Deuda> getDeudas() {
+        return deudas;
+    }
+
+    public void setDeudas(List<Deuda> deudas) {
+        this.deudas = deudas;
+    }
+
     @Override
     public DeudaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deuda, parent, false);

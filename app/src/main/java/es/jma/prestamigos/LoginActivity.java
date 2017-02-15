@@ -4,29 +4,20 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
+import static es.jma.prestamigos.constantes.KShared.*;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,18 +27,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
-import es.jma.prestamigos.conexiones.ConexionesREST;
+import es.jma.prestamigos.comandos.Comando;
+import es.jma.prestamigos.comandos.LoginComando;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.constantes.KReqCode;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventLogin;
 import es.jma.prestamigos.navegacion.BaseActivity;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -148,7 +135,9 @@ public class LoginActivity extends BaseActivity {
         } else {
             // Pantalla carga
             showProgress(true);
-            ConexionesREST.getInstance(KPantallas.PANTALLA_LOGIN).login(email, password);
+            Comando login = new LoginComando(KPantallas.PANTALLA_LOGIN);
+            login.ejecutar(email,password);
+
         }
     }
 
@@ -236,6 +225,18 @@ public class LoginActivity extends BaseActivity {
         //En caso contrario, avanzar de pantalla
         else
         {
+            //Guardar datos
+            SharedPreferences shared = getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putLong(CLAVE_ID,usuario.getId());
+            String avatar = usuario.getAvatarBase64();
+            if (avatar != null)
+            {
+                editor.putString(CLAVE_AVATAR, avatar);
+            }
+            editor.commit();
+
+            //Ir a pantalla principal
             start(PrincipalActivity.class,true);
         }
 

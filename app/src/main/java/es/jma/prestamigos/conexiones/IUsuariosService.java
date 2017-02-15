@@ -1,5 +1,8 @@
 package es.jma.prestamigos.conexiones;
 
+import java.util.List;
+
+import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.RespuestaREST;
 import es.jma.prestamigos.dominio.Usuario;
 import retrofit2.Call;
@@ -21,5 +24,6 @@ public interface IUsuariosService {
      */
     @GET("usuarios/login")
     public Call<RespuestaREST<Usuario>> login (@Query("email") String email, @Query("password") String password);
+
 
 }

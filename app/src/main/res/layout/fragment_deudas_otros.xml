@@ -7,70 +7,85 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/coordinator_deudas">
 
-        <android.support.v7.widget.SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchDeudasOtros"
-            app:queryHint="@string/sugerencia_busqueda_deuda" />
-
-        <ScrollView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <ProgressBar
+                android:id="@+id/deudas_progress"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="UselessParent">
+                android:layout_marginBottom="8dp"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchDeudasOtros"
+                app:queryHint="@string/sugerencia_busqueda_deuda" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/deudas_view">
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="UselessParent">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/otros_deuda_total"
-                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
-                        android:paddingTop="@dimen/paddin_cantidad_vertical"
-                        android:paddingBottom="@dimen/paddin_cantidad_vertical"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/tam_boton_accion"
-                        android:paddingLeft="@dimen/paddin_cantidad_vertical"
-                        android:paddingRight="@dimen/paddin_cantidad_vertical"
-                        android:textColor="@android:color/black" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:text="@string/otros_deuda_cantidad"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/deudas_total"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/tam_boton_accion"
-                        android:textAlignment="textEnd"
-                        android:paddingTop="@dimen/paddin_cantidad_vertical"
-                        android:paddingBottom="@dimen/paddin_cantidad_vertical"
-                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
-                        android:paddingRight="@dimen/paddin_cantidad_vertical"
-                        android:paddingLeft="@dimen/paddin_cantidad_vertical"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/otros_deuda_total"
+                            android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
+                            android:paddingTop="@dimen/paddin_cantidad_vertical"
+                            android:paddingBottom="@dimen/paddin_cantidad_vertical"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/tam_boton_accion"
+                            android:paddingLeft="@dimen/paddin_cantidad_vertical"
+                            android:paddingRight="@dimen/paddin_cantidad_vertical"
+                            android:textColor="@android:color/black" />
+
+                        <TextView
+                            android:text="@string/otros_deuda_cantidad"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/deudas_total"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/tam_boton_accion"
+                            android:textAlignment="textEnd"
+                            android:paddingTop="@dimen/paddin_cantidad_vertical"
+                            android:paddingBottom="@dimen/paddin_cantidad_vertical"
+                            android:layout_marginBottom="@dimen/paddin_cantidad_vertical"
+                            android:paddingRight="@dimen/paddin_cantidad_vertical"
+                            android:paddingLeft="@dimen/paddin_cantidad_vertical"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rv_deudas" />
+
+
                 </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/rv_deudas" />
-
-
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

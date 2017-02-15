@@ -23,6 +23,11 @@ public enum TipoDeuda {
         }
     }
 
+    /**
+     * Traducir de int a enum
+     * @param x
+     * @return
+     */
     public static TipoDeuda fromInteger(int x) {
         switch(x)
         {
@@ -34,5 +39,28 @@ public enum TipoDeuda {
                 return DEBO;
         }
         return null;
+    }
+
+    /**
+     * Traducir de enum a int
+     * @param tipo
+     * @return
+     */
+    public static int fromEnum (TipoDeuda tipo){
+        int num = 0;
+        if (tipo.equals(TipoDeuda.TODAS))
+        {
+            num = 0;
+        }
+        else if (tipo.equals(TipoDeuda.DEBEN))
+        {
+            num = 1;
+        }
+        else if (tipo.equals(TipoDeuda.DEBO))
+        {
+            num = 2;
+        }
+
+        return num;
     }
 }
