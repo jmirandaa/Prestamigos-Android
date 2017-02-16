@@ -2,6 +2,7 @@ package es.jma.prestamigos.comandos;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.jma.prestamigos.conexiones.IDeudasService;
@@ -63,8 +64,14 @@ public class TodasDeudasComando extends Comando implements Callback<RespuestaRES
             RespuestaREST<List<Deuda>> deudas = response.body();
 
             if (deudas != null) {
+                List<Deuda> contenido = deudas.getContenido();
+                if (contenido == null)
+                {
+                    contenido = new ArrayList<>();
+                }
+
                 //Notificar resultado
-                EventDeudas eventDeudas = new EventDeudas(deudas.getContenido());
+                EventDeudas eventDeudas = new EventDeudas(contenido);
                 eventDeudas.setCodigo(deudas.getCodError());
                 eventDeudas.setMsg(deudas.getMsgError());
                 EventBus.getDefault().post(eventDeudas);

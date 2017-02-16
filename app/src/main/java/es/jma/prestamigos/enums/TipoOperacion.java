@@ -18,4 +18,18 @@ public enum TipoOperacion {
         return null;
     }
 
+    public static int fromEnum (TipoOperacion tipo){
+        int num = 0;
+        if (tipo.equals(TipoOperacion.PAGAR))
+        {
+            num = 0;
+        }
+        else if (tipo.equals(TipoOperacion.AUMENTAR))
+        {
+            num = 1;
+        }
+
+        return num;
+    }
+
 }

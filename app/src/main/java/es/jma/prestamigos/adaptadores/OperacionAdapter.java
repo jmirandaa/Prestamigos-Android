@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import es.jma.prestamigos.R;
 import es.jma.prestamigos.dominio.Operacion;
 import es.jma.prestamigos.enums.TipoOperacion;
+import es.jma.prestamigos.utils.ui.UtilFechas;
 
 /**
  * Created by tulon on 8/02/17.
@@ -30,6 +31,14 @@ public class OperacionAdapter extends RecyclerView.Adapter<OperacionAdapter.Oper
         this.operaciones = operaciones;
     }
 
+    public List<Operacion> getOperaciones() {
+        return operaciones;
+    }
+
+    public void setOperaciones(List<Operacion> operaciones) {
+        this.operaciones = operaciones;
+    }
+
     @Override
     public OperacionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_operacion, parent, false);
@@ -41,7 +50,10 @@ public class OperacionAdapter extends RecyclerView.Adapter<OperacionAdapter.Oper
 
     @Override
     public void onBindViewHolder(OperacionViewHolder holder, int position) {
-        TipoOperacion tipoOperacion = operaciones.get(position).getTipo();
+        Operacion operacion = operaciones.get(position);
+        TipoOperacion tipoOperacion = operacion.getTipo();
+
+        //Traducir tipo
         String tipo = null;
         if (tipoOperacion.equals(TipoOperacion.PAGAR))
         {
@@ -51,9 +63,16 @@ public class OperacionAdapter extends RecyclerView.Adapter<OperacionAdapter.Oper
         {
             tipo = tipoAumentada;
         }
+
+        //Procesar fecha
+        String fecha = UtilFechas.parseFecha(operacion.getFechaRegistro());
+
+        //Procesar cantidad
+        double cantidad = operacion.getCantidad();
+
         holder.tipo.setText(tipo);
-        holder.fecha.setText("21/01/2016");
-        holder.valor.setText(operaciones.get(position).getCantidad()+"€");
+        holder.fecha.setText(fecha);
+        holder.valor.setText(cantidad+"€");
     }
 
     @Override

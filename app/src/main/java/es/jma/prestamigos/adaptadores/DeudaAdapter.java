@@ -3,6 +3,7 @@ package es.jma.prestamigos.adaptadores;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +14,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import es.jma.prestamigos.DetallesDeudaActivity;
 import es.jma.prestamigos.R;
 import es.jma.prestamigos.constantes.KAccion;
 import es.jma.prestamigos.dominio.Deuda;
+import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.enums.TipoDeuda;
+import es.jma.prestamigos.utils.ui.UtilFechas;
 
 /**
  * Created by tulon on 3/02/17.
@@ -27,11 +33,13 @@ import es.jma.prestamigos.dominio.Deuda;
 public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHolder> {
     private DeudaAdapter instance;
     private List<Deuda> deudas;
+    private TipoDeuda tipoDeuda;
 
-    public DeudaAdapter(List<Deuda> deudas)
+    public DeudaAdapter(TipoDeuda tipoDeuda, List<Deuda> deudas)
     {
         this.instance = this;
         this.deudas = deudas;
+        this.tipoDeuda = tipoDeuda;
     }
 
     public List<Deuda> getDeudas() {
@@ -51,10 +59,43 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
 
     @Override
     public void onBindViewHolder(DeudaViewHolder holder, int position) {
-        holder.nombre.setText(deudas.get(position).getUsuarioDestino().getNombre()+" "+deudas.get(position).getUsuarioDestino().getApellidos());
-        holder.fecha.setText("21/01/2016");
-        holder.concepto.setText(deudas.get(position).getConcepto());
-        holder.cantidad.setText(deudas.get(position).getCantidad()+"€");
+        Deuda deuda = deudas.get(position);
+        Usuario usuarioOrigen = deuda.getUsuario();
+        Usuario usuarioDestino = deuda.getUsuarioDestino();
+
+
+        //Procesar nombre y apellidos
+        String nombre = null;
+        String apellidos = null;
+
+        if (tipoDeuda.equals(TipoDeuda.DEBEN) && (usuarioOrigen != null))
+        {
+            nombre = usuarioOrigen.getNombre();
+            apellidos = usuarioOrigen.getApellidos();
+        }
+        else if (tipoDeuda.equals(TipoDeuda.DEBO) && (usuarioDestino != null))
+        {
+            nombre = usuarioDestino.getNombre();
+            apellidos = usuarioDestino.getApellidos();
+        }
+
+        if (nombre == null)
+        {
+            nombre = "";
+        }
+        if (apellidos == null)
+        {
+            apellidos = null;
+        }
+
+        //Procesar fecha
+        String fechaTexto = UtilFechas.parseFecha(deuda.getFechaRegistro());
+
+        //Actualizar holder
+        holder.nombre.setText(nombre+" "+apellidos);
+        holder.fecha.setText(fechaTexto);
+        holder.concepto.setText(deuda.getConcepto());
+        holder.cantidad.setText(deuda.getCantidad() - deuda.getSaldado() +"€");
     }
 
     @Override
@@ -111,12 +152,22 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                 @Override
                 public void onClick(View v) {
                     int posicion = getAdapterPosition();
+                    Deuda deuda = deudas.get(posicion);
 
                     //Contexto
                     Context context = v.getContext();
 
                     //Entrar en detalles
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("idDeuda",deuda.getId());
+                    bundle.putString("nombre", nombre.getText().toString());
+                    bundle.putString("fecha", fecha.getText().toString());
+                    bundle.putString("concepto",concepto.getText().toString());
+                    bundle.putString("cantidad", String.valueOf(deuda.getCantidad()));
+                    bundle.putString("pagado", String.valueOf(deuda.getSaldado()));
+
                     Intent intent = new Intent(context, DetallesDeudaActivity.class);
+                    intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
             });

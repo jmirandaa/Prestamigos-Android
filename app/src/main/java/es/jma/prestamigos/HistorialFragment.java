@@ -15,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.dominio.Deuda;
+import es.jma.prestamigos.enums.TipoDeuda;
 import es.jma.prestamigos.navegacion.BaseFragment;
 
 
@@ -50,7 +51,7 @@ public class HistorialFragment extends BaseFragment {
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         List<Deuda> deudas = Deuda.getDatosPrueba();
 
-        DeudaAdapter adapter = new DeudaAdapter(deudas);
+        DeudaAdapter adapter = new DeudaAdapter(TipoDeuda.TODAS,deudas);
         rv.setAdapter(adapter);
 
         return v;

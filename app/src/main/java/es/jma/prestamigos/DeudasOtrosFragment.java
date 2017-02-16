@@ -57,6 +57,7 @@ public class DeudasOtrosFragment extends BaseFragment {
     //Parámetro
     public static final String TIPO_DEUDA = "tipoDeuda";
     private int tipoDeuda;
+    private TipoDeuda tipo;
 
     @BindView(R.id.deudas_total)
     TextView tvTotal;
@@ -151,12 +152,25 @@ public class DeudasOtrosFragment extends BaseFragment {
             }
         });
 
+        //Tipo de deuda
+        tipo = TipoDeuda.TODAS;
+
+        //Ver tipo deudas
+        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS)
+        {
+            tipo = TipoDeuda.DEBEN;
+        }
+        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        {
+            tipo = TipoDeuda.DEBO;
+        }
+
         //Rellenar lista
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         //List<Deuda> deudas = Deuda.getDatosPrueba();
         List<Deuda> deudas = new ArrayList<>();
 
-        DeudaAdapter adapter = new DeudaAdapter(deudas);
+        DeudaAdapter adapter = new DeudaAdapter(tipo, deudas);
         rv.setAdapter(adapter);
 
         //Otros
@@ -166,10 +180,10 @@ public class DeudasOtrosFragment extends BaseFragment {
         tvTotal.requestFocus();
 
         //Cambiar título y actualizar lista
-        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS) {
+        if (tipo.equals(TipoDeuda.DEBEN)) {
             getActionBar().setTitle(R.string.titulo_deudas_pendiente);
         }
-        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+        else if (tipo.equals(TipoDeuda.DEBO))
         {
             getActionBar().setTitle(R.string.titulo_mis_deudas);
         }
@@ -184,20 +198,7 @@ public class DeudasOtrosFragment extends BaseFragment {
     private void actualizarDeudas()
     {
         Comando deudas = new TodasDeudasComando(KPantallas.PANTALLA_DEUDAS_OTROS);
-
-        SharedPreferences shared = getContext().getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
-        long idUsuario = shared.getLong(CLAVE_ID,-1);
-        TipoDeuda tipo = TipoDeuda.TODAS;
-
-        //Ver tipo deudas
-        if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS)
-        {
-            tipo = TipoDeuda.DEBEN;
-        }
-        else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
-        {
-            tipo = TipoDeuda.DEBO;
-        }
+        long idUsuario = UtilUI.getIdUsuario(getContext());
 
         //Conectarse
         if (idUsuario != -1)
