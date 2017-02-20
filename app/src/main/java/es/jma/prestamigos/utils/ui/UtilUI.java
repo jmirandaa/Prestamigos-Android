@@ -47,4 +47,19 @@ public class UtilUI {
 
         return idUsuario;
     }
+
+    /**
+     * Leer el email de las SharedPreferences
+     * @param context
+     * @return
+     */
+    public static String getEmail(Context context)
+    {
+        String email = null;
+
+        SharedPreferences shared = context.getSharedPreferences(KShared.CLAVE_PREF, Context.MODE_PRIVATE);
+        email = shared.getString(KShared.CLAVE_EMAIL,"");
+
+        return email;
+    }
 }

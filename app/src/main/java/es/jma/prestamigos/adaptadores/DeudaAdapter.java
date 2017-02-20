@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +22,17 @@ import java.util.List;
 
 import es.jma.prestamigos.DetallesDeudaActivity;
 import es.jma.prestamigos.R;
+import es.jma.prestamigos.comandos.Comando;
+import es.jma.prestamigos.comandos.NuevaOpComando;
 import es.jma.prestamigos.constantes.KAccion;
+import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.Deuda;
+import es.jma.prestamigos.dominio.Operacion;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.enums.TipoDeuda;
+import es.jma.prestamigos.enums.TipoOperacion;
 import es.jma.prestamigos.utils.ui.UtilFechas;
+import es.jma.prestamigos.utils.ui.UtilUI;
 
 /**
  * Created by tulon on 3/02/17.
@@ -194,23 +202,29 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
         {
             //Recuperar posición actual
             int posicion = getAdapterPosition();
-
+            final Deuda deuda = deudas.get(posicion);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
             LayoutInflater layoutInflater = LayoutInflater.from(v.getContext());
 
-            builder.setView(layoutInflater.inflate(R.layout.dialog_accion_deuda, null));
+            final View dialogView = layoutInflater.inflate(R.layout.dialog_accion_deuda, null);
+            builder.setView(dialogView);
 
+            TipoOperacion tipo = null;
             //Título
             if (tipoAccion == KAccion.ACCION_SALDAR)
             {
                 builder.setTitle(R.string.dialogo_deuda_titulo1);
+                tipo = TipoOperacion.PAGAR;
             }
             else if (tipoAccion == KAccion.ACCION_AUMENTAR)
             {
                 builder.setTitle(R.string.dialogo_deuda_titulo2);
+                tipo = TipoOperacion.AUMENTAR;
             }
+
+            final TipoOperacion tipoFinal = tipo;
 
             //Botón aceptar
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -218,6 +232,24 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                     // User clicked OK button
                     //deudas.remove(0);
                     //instance.notifyDataSetChanged();
+
+                    //Recuperar valor
+                    EditText etCantidad = (EditText) dialogView.findViewById(R.id.campo_cantidad);
+
+                    Editable valor = etCantidad.getText();
+                    if ((valor != null) && (!valor.toString().isEmpty())) {
+                        //Crear operacion
+                        Operacion operacion = new Operacion();
+                        double cantidad = Double.parseDouble(valor.toString());
+                        operacion.setCantidad(cantidad);
+                        operacion.setDeuda(deuda);
+                        operacion.setTipo(tipoFinal);
+                        operacion.setUsuario(new Usuario(UtilUI.getIdUsuario(dialogView.getContext())));
+
+                        //LLamar al servicio
+                        Comando comando = new NuevaOpComando(KPantallas.PANTALLA_DEUDAS_OTROS);
+                        comando.ejecutar(operacion, tipoDeuda);
+                    }
                 }
             });
 

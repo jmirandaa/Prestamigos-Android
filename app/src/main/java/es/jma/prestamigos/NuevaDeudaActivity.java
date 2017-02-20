@@ -1,8 +1,14 @@
 package es.jma.prestamigos;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.MatrixCursor;
+import android.os.Build;
 import android.provider.BaseColumns;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +19,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
+import es.jma.prestamigos.comandos.AmigosComando;
+import es.jma.prestamigos.comandos.Comando;
+import es.jma.prestamigos.constantes.KPantallas;
+import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.eventbus.EventUsuarios;
 import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.utils.ui.UtilSuma;
+import es.jma.prestamigos.utils.ui.UtilUI;
 
 import static es.jma.prestamigos.DeudasOtrosFragment.TIPO_DEUDA;
 
@@ -24,14 +46,16 @@ public class NuevaDeudaActivity extends BaseActivity {
     private int tipoDeuda = -1;
 
     @BindView(R.id.searchNuevaDeuda)
-    SearchView searchView;
-    private  SimpleCursorAdapter mAdapter;
+    AutoCompleteTextView searchView;
+    @BindView(R.id.activity_nueva_deuda)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.form_nueva_deuda)
+    View mView;
+    @BindView(R.id.nueva_deuda_progress)
+    View mProgressView;
+    private ArrayAdapter<String> mAdapter;
 
-    private static final String[] SUGGESTIONS = {
-            "Bauru", "Sao Paulo", "Rio de Janeiro",
-            "Bahia", "Mato Grosso", "Minas Gerais",
-            "Tocantins", "Rio Grande do Sul"
-    };
+    private List<String> sugerencias = new ArrayList<String>();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -70,62 +94,113 @@ public class NuevaDeudaActivity extends BaseActivity {
         }
 
         //Barra de búsqueda
-        searchView.setIconified(false);
-        searchView.clearFocus();
+        mAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,sugerencias);
+        searchView.setAdapter(mAdapter);
+        searchView.setThreshold(1);
 
-        final String[] from = new String[] {"cityName"};
-        final int[] to = new int[] {android.R.id.text1};
+        //Cargar amigos
+        actualizarAmigos();
 
-        mAdapter = new SimpleCursorAdapter(this,
-                android.R.layout.simple_list_item_1,
-                null,
-                from,
-                to,
-                CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);;
-        searchView.setSuggestionsAdapter(mAdapter);
-
-        //Al seleccionar sugerencia, rellenar
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionClick(int position) {
-                searchView.setQuery(SUGGESTIONS[position],false);
-                return true;
-            }
-
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                // Your code here
-                return true;
-            }
-        });
-
-        //Al introducir texto, mirar sugerencias
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                populateAdapter(s);
-                return false;
-            }
-        });
     }
 
+    /**
+     * Cargar listado de amigos*/
+    private void actualizarAmigos()
+    {
+        Comando comando = new AmigosComando(KPantallas.PANTALLA_NUEVA_DEUDA_OTROS);
+        String email = UtilUI.getEmail(this);
 
-    private void populateAdapter(String query) {
-        final MatrixCursor c = new MatrixCursor(new String[]{ BaseColumns._ID, "cityName" });
-        for (int i=0; i<SUGGESTIONS.length; i++) {
-            if (SUGGESTIONS[i].toLowerCase().startsWith(query.toLowerCase()))
-                c.addRow(new Object[] {i, SUGGESTIONS[i]});
+        if ((email != null) && (!email.isEmpty())) {
+            //Cargar amigos
+            showProgress(true);
+
+            //Llamada
+            comando.ejecutar(email);
         }
-        mAdapter.changeCursor(c);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * Responder a eventos de usuarios
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUsuarios(EventUsuarios event) {
+        List<Usuario> usuarios = event.getUsuarios();
+        showProgress(false);
+
+        //Si es error de conexión
+        if (event.getCodigo() == -1)
+        {
+            Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        //En caso contrario, actualizar listado amigos
+        else
+        {
+            mAdapter.clear();
+            if (usuarios != null)
+            {
+                for (Usuario usuario : usuarios)
+                {
+                    mAdapter.add(usuario.getNombre()+" "+usuario.getApellidos());
+                }
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+
+    };
+
+    /**
+     * Ocultar formulario
+     * @param show
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 }

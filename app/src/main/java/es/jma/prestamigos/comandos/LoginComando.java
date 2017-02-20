@@ -61,11 +61,17 @@ public class LoginComando extends Comando implements Callback<RespuestaREST<Usua
         {
             RespuestaREST<Usuario> usuario = response.body();
 
-            //Notificar resultado
-            EventLogin eventLogin = new EventLogin(usuario.getContenido());
-            eventLogin.setCodigo(usuario.getCodError());
-            eventLogin.setMsg(usuario.getMsgError());
-            EventBus.getDefault().post(eventLogin);
+            if (usuario != null) {
+                //Notificar resultado
+                EventLogin eventLogin = new EventLogin(usuario.getContenido());
+                eventLogin.setCodigo(usuario.getCodError());
+                eventLogin.setMsg(usuario.getMsgError());
+                EventBus.getDefault().post(eventLogin);
+            }
+            else
+            {
+                error();
+            }
         }
 
     }
@@ -74,10 +80,18 @@ public class LoginComando extends Comando implements Callback<RespuestaREST<Usua
     public void onFailure(Call<RespuestaREST<Usuario>> call, Throwable t) {
         if (this.pantalla == KPantallas.PANTALLA_LOGIN)
         {
-            //Notificar resultado
-            EventLogin eventLogin = new EventLogin(null);
-            eventLogin.setCodigo(-1);
-            EventBus.getDefault().post(eventLogin);
+           error();
         }
+    }
+
+    /**
+     * Notificar error
+     */
+    private void error()
+    {
+        //Notificar resultado
+        EventLogin eventLogin = new EventLogin(null);
+        eventLogin.setCodigo(-1);
+        EventBus.getDefault().post(eventLogin);
     }
 }

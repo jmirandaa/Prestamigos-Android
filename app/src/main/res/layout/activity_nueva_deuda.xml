@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_nueva_deuda"
@@ -12,40 +12,65 @@
     tools:context="es.jma.prestamigos.NuevaDeudaActivity"
     android:orientation="vertical">
 
-    <android.support.v7.widget.SearchView
+    <ProgressBar
+        android:id="@+id/nueva_deuda_progress"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchNuevaDeuda"
-        app:queryHint="@string/campo_nombre_amigo"
-        app:searchIcon="@drawable/ic_account" />
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/form_nueva_deuda">
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_concepto"
-            android:id="@+id/nueva_deuda_concepto"
-            android:drawablePadding="@dimen/padding_icon_field"
-            android:inputType="text"
-            android:drawableStart="@drawable/ic_file_document_box" />
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchNuevaDeuda"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/padding_icon_field"
+                android:drawableStart="@drawable/ic_account"
+                android:drawableLeft="@drawable/ic_account"
+                android:hint="@string/campo_nombre_amigo" />
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/campo_cantidad"
-            android:id="@+id/nueva_deuda_cantidad"
-            android:drawablePadding="@dimen/padding_icon_field"
-            android:inputType="numberDecimal"
-            android:drawableStart="@drawable/ic_cash_100" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/campo_concepto"
+                android:id="@+id/nueva_deuda_concepto"
+                android:drawablePadding="@dimen/padding_icon_field"
+                android:inputType="text"
+                android:drawableStart="@drawable/ic_file_document_box"
+                android:drawableLeft="@drawable/ic_file_document_box" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/campo_cantidad"
+                android:id="@+id/nueva_deuda_cantidad"
+                android:drawablePadding="@dimen/padding_icon_field"
+                android:inputType="numberDecimal"
+                android:drawableStart="@drawable/ic_cash_100"
+                android:drawableLeft="@drawable/ic_cash_100" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

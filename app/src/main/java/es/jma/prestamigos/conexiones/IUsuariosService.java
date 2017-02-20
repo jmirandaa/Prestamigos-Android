@@ -26,4 +26,13 @@ public interface IUsuariosService {
     public Call<RespuestaREST<Usuario>> login (@Query("email") String email, @Query("password") String password);
 
 
+    /**
+     * Listado de amigos de un usuario
+     * @param email
+     * @return
+     */
+    @GET("usuarios/amigos")
+    public Call<RespuestaREST<List<Usuario>>> todosAmigos (@Query("email") String email);
+
+
 }

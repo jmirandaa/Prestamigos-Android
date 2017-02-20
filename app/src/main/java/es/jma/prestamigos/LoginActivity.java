@@ -229,6 +229,7 @@ public class LoginActivity extends BaseActivity {
             SharedPreferences shared = getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = shared.edit();
             editor.putLong(CLAVE_ID,usuario.getId());
+            editor.putString(CLAVE_EMAIL, usuario.getEmail());
             String avatar = usuario.getAvatarBase64();
             if (avatar != null)
             {

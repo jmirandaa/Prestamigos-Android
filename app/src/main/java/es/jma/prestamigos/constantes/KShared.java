@@ -8,4 +8,5 @@ public class KShared {
     public static final String CLAVE_PREF = "es.jma.prestamigos.shared";
     public static final String CLAVE_ID = "idUsuario";
     public static final String CLAVE_AVATAR = "avatarUsuario";
+    public static final String CLAVE_EMAIL = "claveEmail";
 }

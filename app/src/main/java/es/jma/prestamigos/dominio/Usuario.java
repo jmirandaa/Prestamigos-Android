@@ -30,6 +30,11 @@ public class Usuario {
 
     }
 
+    public Usuario(long id)
+    {
+        this.id = id;
+    }
+
     public Usuario(long id, String email, String nombre, String apellidos)
     {
         this.id = id;
