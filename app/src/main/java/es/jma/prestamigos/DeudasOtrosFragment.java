@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +37,7 @@ import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.comandos.Comando;
 import es.jma.prestamigos.comandos.TodasDeudasComando;
 import es.jma.prestamigos.constantes.KPantallas;
+import es.jma.prestamigos.constantes.KReqCode;
 import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.enums.TipoDeuda;
 import es.jma.prestamigos.eventbus.EventDeudas;
@@ -275,12 +277,28 @@ public class DeudasOtrosFragment extends BaseFragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putInt(TIPO_DEUDA,tipoDeuda);
-                start(NuevaDeudaActivity.class, bundle);
+                start(NuevaDeudaActivity.class, bundle, KReqCode.REQ_CODE_NUEVA_DEUDA);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    /**
+     * Si se vuelve de nueva deuda, actualizar datos
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        if (requestCode == KReqCode.REQ_CODE_NUEVA_DEUDA);
+        {
+            if (resultCode == NuevaDeudaActivity.RESULT_OK) {
+                actualizarDeudas();
+            }
+        }
     }
 
     /**

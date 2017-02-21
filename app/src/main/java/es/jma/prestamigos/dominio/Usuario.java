@@ -35,6 +35,12 @@ public class Usuario {
         this.id = id;
     }
 
+    public Usuario(String nombre, String apellidos)
+    {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
     public Usuario(long id, String email, String nombre, String apellidos)
     {
         this.id = id;

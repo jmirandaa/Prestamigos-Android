@@ -53,6 +53,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivityForResult(new Intent(this, activity),reqCode);
     }
 
+    protected void start(Class<? extends BaseActivity> activity, @Nullable Bundle bundle, int reqCode) {
+        Intent intent = new Intent(this, activity);
+        if (bundle != null)
+        {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, reqCode);
+    }
+
+    protected void start(Class<? extends BaseActivity> activity, @Nullable Bundle bundle) {
+        Intent intent = new Intent(this, activity);
+        if (bundle != null)
+        {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
     /**
      * Devolver la barra de acción inicializada
      * @return

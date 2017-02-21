@@ -35,6 +35,15 @@ public class BaseFragment extends Fragment {
         return v;
     }
 
+    protected void start(Class<? extends BaseActivity> activity, @Nullable Bundle bundle, int reqCode) {
+        Intent intent = new Intent(getActivity(), activity);
+        if (bundle != null)
+        {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, reqCode);
+    }
+
     protected void start(Class<? extends BaseActivity> activity, @Nullable Bundle bundle) {
         Intent intent = new Intent(getActivity(), activity);
         if (bundle != null)

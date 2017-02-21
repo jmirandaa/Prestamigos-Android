@@ -2,11 +2,12 @@ package es.jma.prestamigos.conexiones;
 
 import java.util.List;
 
-import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.RespuestaREST;
 import es.jma.prestamigos.dominio.Usuario;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -33,6 +34,24 @@ public interface IUsuariosService {
      */
     @GET("usuarios/amigos")
     public Call<RespuestaREST<List<Usuario>>> todosAmigos (@Query("email") String email);
+
+    /**
+     * Añadir nuevo amigo invitado
+     * @param usuario
+     * @param emailOrigen
+     * @return
+     */
+    @POST("usuarios/invitado")
+    public Call<RespuestaREST<Long>> nuevoInvitado  (@Body Usuario usuario, @Query("emailOrigen") String emailOrigen);
+
+    /**
+     * Añadir nuevo amigo
+     * @param emailDestino
+     * @param emailOrigen
+     * @return
+     */
+    @POST("usuarios/amigo")
+    public Call<RespuestaREST<Long>> nuevoAmigo  (@Query("emailDestino") String emailDestino, @Query("emailOrigen") String emailOrigen);
 
 
 }

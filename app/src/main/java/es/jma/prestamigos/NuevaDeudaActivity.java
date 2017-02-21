@@ -3,25 +3,17 @@ package es.jma.prestamigos;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.database.MatrixCursor;
 import android.os.Build;
-import android.provider.BaseColumns;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
+import android.widget.EditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,16 +25,31 @@ import java.util.List;
 import butterknife.BindView;
 import es.jma.prestamigos.comandos.AmigosComando;
 import es.jma.prestamigos.comandos.Comando;
+import es.jma.prestamigos.comandos.NuevaDeudaComando;
+import es.jma.prestamigos.comandos.NuevoAmigoComando;
+import es.jma.prestamigos.comandos.NuevoInvitadoComando;
 import es.jma.prestamigos.constantes.KPantallas;
+import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.enums.TipoDeuda;
+import es.jma.prestamigos.eventbus.EventAmigo;
+import es.jma.prestamigos.eventbus.EventDeudas;
 import es.jma.prestamigos.eventbus.EventUsuarios;
 import es.jma.prestamigos.navegacion.BaseActivity;
-import es.jma.prestamigos.utils.ui.UtilSuma;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 import static es.jma.prestamigos.DeudasOtrosFragment.TIPO_DEUDA;
 
+/**
+ * FALTA:
+ * - Comprobar campos antes de nueva deuda
+ * - Mejorar composición nombre y apellidos
+ * - Probar con email
+ * - Probar con nuevo usuario
+ */
+
 public class NuevaDeudaActivity extends BaseActivity {
+    static final int RESULT_OK = 10;
     private int tipoDeuda = -1;
 
     @BindView(R.id.searchNuevaDeuda)
@@ -53,6 +60,11 @@ public class NuevaDeudaActivity extends BaseActivity {
     View mView;
     @BindView(R.id.nueva_deuda_progress)
     View mProgressView;
+    @BindView(R.id.nueva_deuda_concepto)
+    EditText mConcepto;
+    @BindView(R.id.nueva_deuda_cantidad)
+    EditText mCantidad;
+
     private ArrayAdapter<String> mAdapter;
 
     private List<String> sugerencias = new ArrayList<String>();
@@ -69,7 +81,7 @@ public class NuevaDeudaActivity extends BaseActivity {
                 return true;
             //Si es el de terminar
             case R.id.accion_anyadir:
-                onBackPressed();
+                nuevaDeuda();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -101,6 +113,48 @@ public class NuevaDeudaActivity extends BaseActivity {
         //Cargar amigos
         actualizarAmigos();
 
+    }
+
+    /**
+     * Si los campos son correctos, crear nueva deuda
+     */
+    private void nuevaDeuda()
+    {
+        //Ver si el usuario es amigo o no
+        String nombreAmigo = searchView.getText().toString();
+        if ((nombreAmigo == null) || (nombreAmigo.isEmpty()))
+        {
+            //Error campo
+        }
+        else
+        {
+            showProgress(true);
+
+            String emailOrigen = UtilUI.getEmail(this);
+            //Email
+            if (nombreAmigo.contains("@"))
+            {
+                Comando comando = new NuevoAmigoComando(KPantallas.PANTALLA_NUEVA_DEUDA_OTROS);
+                String emailDestino = nombreAmigo;
+                comando.ejecutar(emailDestino, emailOrigen);
+            }
+            //Nombre
+            else
+            {
+                Comando comando = new NuevoInvitadoComando(KPantallas.PANTALLA_NUEVA_DEUDA_OTROS);
+                String[] partesNombre = nombreAmigo.split(" ");
+                String nombre = partesNombre[0];
+                String apellidos = partesNombre[1];
+                if (partesNombre.length > 2)
+                {
+                    apellidos += partesNombre[2];
+                }
+
+                Usuario usuario = new Usuario(nombre,apellidos);
+                comando.ejecutar(usuario, emailOrigen);
+            }
+
+        }
     }
 
     /**
@@ -163,6 +217,72 @@ public class NuevaDeudaActivity extends BaseActivity {
                 }
             }
             mAdapter.notifyDataSetChanged();
+        }
+
+    };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventAmigo(EventAmigo event) {
+        long amigo = event.getIdAmigo();
+
+        //Si es error de conexión
+        if (event.getCodigo() == -1)
+        {
+            showProgress(false);
+            Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        //En caso contrario, actualizar listado amigos
+        else if (amigo == -1)
+        {
+            showProgress(false);
+            Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        else
+        {
+            //Llamar a servicio de nueva deuda
+            Comando comando = new NuevaDeudaComando(KPantallas.PANTALLA_NUEVA_DEUDA_OTROS);
+            long idOrigen = UtilUI.getIdUsuario(this);
+            long idDestino = amigo;
+            String concepto = mConcepto.getText().toString();
+            double cantidad = Double.parseDouble(mCantidad.getText().toString());
+
+            TipoDeuda tipo = null;
+            //Ver tipo deudas
+            if (tipoDeuda == KPantallas.PANTALLA_DEUDAS_OTROS)
+            {
+                tipo = TipoDeuda.DEBEN;
+                comando.ejecutar(idDestino, idOrigen, cantidad, concepto, tipo);
+            }
+            else if (tipoDeuda == KPantallas.PANTALLA_MIS_DEUDAS)
+            {
+                tipo = TipoDeuda.DEBO;
+                comando.ejecutar(idOrigen, idDestino, cantidad, concepto, tipo);
+            }
+
+
+        }
+
+    };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventDeudas(EventDeudas event) {
+        List<Deuda> deudas = event.getDeudas();
+        showProgress(false);
+
+        //Si es error de conexión
+        if (event.getCodigo() == -1)
+        {
+            Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        //En caso contrario, actualizar listado amigos
+        else
+        {
+            //Finalizar actividad con éxito
+            setResult(RESULT_OK);
+            finish();
         }
 
     };
