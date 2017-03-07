@@ -35,6 +35,7 @@ import es.jma.prestamigos.constantes.KReqCode;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventLogin;
 import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.utils.ui.UtilUI;
 
 /**
  * A login screen that offers login via email/password.
@@ -91,6 +92,13 @@ public class LoginActivity extends BaseActivity {
                 start(RegistroActivity.class,KReqCode.REQ_CODE_REGISTRO);
             }
         });
+
+        //Si ya se había iniciado sesión, saltar
+        long idUsuario = UtilUI.getIdUsuario(this);
+        if (idUsuario != -1)
+        {
+            start(PrincipalActivity.class,true);
+        }
 
     }
 
@@ -228,13 +236,31 @@ public class LoginActivity extends BaseActivity {
             //Guardar datos
             SharedPreferences shared = getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = shared.edit();
+            //Id usuario
             editor.putLong(CLAVE_ID,usuario.getId());
+            //Email
             editor.putString(CLAVE_EMAIL, usuario.getEmail());
+            //Avatar
             String avatar = usuario.getAvatarBase64();
             if (avatar != null)
             {
                 editor.putString(CLAVE_AVATAR, avatar);
             }
+            //Nombre y apellidos
+            String nombre = usuario.getNombre();
+            String apellidos = usuario.getApellidos();
+            StringBuilder nombreApellidos = new StringBuilder("");
+            if (nombre != null)
+            {
+                nombreApellidos.append(nombre);
+            }
+            if (apellidos != null)
+            {
+                nombreApellidos.append(" ");
+                nombreApellidos.append(apellidos);
+            }
+            editor.putString(CLAVE_NOMBRE,nombreApellidos.toString());
+            //Commit
             editor.commit();
 
             //Ir a pantalla principal

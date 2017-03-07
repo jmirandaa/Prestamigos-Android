@@ -59,7 +59,8 @@ public class TodasDeudasComando extends Comando implements Callback<RespuestaRES
     @Override
     public void onResponse(Call<RespuestaREST<List<Deuda>>> call, Response<RespuestaREST<List<Deuda>>> response) {
         //Si estoy en las deudas de otros
-        if ((this.pantalla == KPantallas.PANTALLA_DEUDAS_OTROS) || (this.pantalla == KPantallas.PANTALLA_MIS_DEUDAS))
+        if ((this.pantalla == KPantallas.PANTALLA_DEUDAS_OTROS) || (this.pantalla == KPantallas.PANTALLA_MIS_DEUDAS)
+                || (this.pantalla == KPantallas.PANTALLA_HISTORIAL))
         {
             RespuestaREST<List<Deuda>> deudas = response.body();
 

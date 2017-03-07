@@ -14,6 +14,8 @@
     </string>
     <string name="registrarse">¿No tienes cuenta? Regístrate</string>
     <string name="password_olvidado">Olvidé mi contraseña</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="sesion">Sesión</string>
 
     <!-- Registro -->
     <string name="titulo_registro">Registro</string>
@@ -72,6 +74,8 @@
     <string name="dashboard_deudas_totales">Deudas totales</string>
     <string name="dashboard_medeben">Me deben</string>
     <string name="dashboard_debo">Debo</string>
+    <string name="dashboard_medebian">Me debía</string>
+    <string name="dashboard_debia">Le debía</string>
     <string name="dashboard_numero_medeben">Deudas que deben</string>
     <string name="dashboard_numero_debo">Deudas que debo</string>
 

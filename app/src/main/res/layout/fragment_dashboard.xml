@@ -9,145 +9,160 @@
     android:paddingRight="@dimen/paddin_cantidad_vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+        android:id="@+id/coordinator_resumen">
 
-        <TextView
+        <ProgressBar
+            android:id="@+id/resumen_progress"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dashboard_deudas_totales"
-            android:id="@+id/tv_dashboard_texto_deudas_totales"
-            android:textStyle="bold"
-            android:textSize="@dimen/tam_concepto"
-            android:textColor="@color/colorAccent" />
-
-        <TextView
-            android:text="-15€"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_dashboard_valor_deudas_totales"
-            tools:ignore="HardcodedText"
-            android:textSize="@dimen/tam_nombre"
-            android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent"
+            android:id="@+id/resumen">
 
-            <LinearLayout
-                android:orientation="vertical"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5">
+                android:text="@string/dashboard_deudas_totales"
+                android:id="@+id/tv_dashboard_texto_deudas_totales"
+                android:textStyle="bold"
+                android:textSize="@dimen/tam_concepto"
+                android:textColor="@color/colorAccent" />
 
-                <TextView
+            <TextView
+                android:text="-15€"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_dashboard_valor_deudas_totales"
+                tools:ignore="HardcodedText"
+                android:textSize="@dimen/tam_nombre"
+                android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_texto_debo"
-                    android:text="@string/dashboard_debo"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/tam_concepto"
-                    android:textColor="@color/colorAccent" />
+                    android:layout_weight="0.5">
 
-                <TextView
-                    android:text="35€"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_texto_debo"
+                        android:text="@string/dashboard_debo"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/tam_concepto"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:text="35€"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_valor_debo"
+                        tools:ignore="HardcodedText"
+                        android:textSize="@dimen/tam_nombre"
+                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_valor_debo"
-                    tools:ignore="HardcodedText"
-                    android:textSize="@dimen/tam_nombre"
-                    android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:text="@string/dashboard_medeben"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_texto_medeben"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/tam_concepto"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:text="20€"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_valor_medeben"
+                        tools:ignore="HardcodedText"
+                        android:textSize="@dimen/tam_nombre"
+                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
 
-                <TextView
-                    android:text="@string/dashboard_medeben"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_texto_medeben"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/tam_concepto"
-                    android:textColor="@color/colorAccent" />
+                    android:layout_weight="0.5">
 
-                <TextView
-                    android:text="20€"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_texto_numero_debo"
+                        android:text="@string/dashboard_numero_debo"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/tam_concepto"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:text="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_valor_numero_debo"
+                        tools:ignore="HardcodedText"
+                        android:textSize="@dimen/tam_nombre" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_valor_medeben"
-                    tools:ignore="HardcodedText"
-                    android:textSize="@dimen/tam_nombre"
-                    android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+                    android:layout_weight="0.5">
+
+                    <TextView
+                        android:text="@string/dashboard_numero_medeben"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_texto_numero_medeben"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/tam_boton_accion"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        android:text="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_dashboard_valor_numero_medeben"
+                        tools:ignore="HardcodedText"
+                        android:textSize="@dimen/tam_nombre"
+                        android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
+                </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_texto_numero_debo"
-                    android:text="@string/dashboard_numero_debo"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/tam_concepto"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:text="3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_valor_numero_debo"
-                    tools:ignore="HardcodedText"
-                    android:textSize="@dimen/tam_nombre" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5">
-
-                <TextView
-                    android:text="@string/dashboard_numero_medeben"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_texto_numero_medeben"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/tam_boton_accion"
-                    android:textColor="@color/colorAccent" />
-
-                <TextView
-                    android:text="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_dashboard_valor_numero_medeben"
-                    tools:ignore="HardcodedText"
-                    android:textSize="@dimen/tam_nombre"
-                    android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

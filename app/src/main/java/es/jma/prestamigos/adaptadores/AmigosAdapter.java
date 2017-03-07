@@ -1,7 +1,12 @@
 package es.jma.prestamigos.adaptadores;
 
+import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_NOMBRE;
+import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_APELLIDOS;
+import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_EMAIL;
+import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_ID;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +27,15 @@ import es.jma.prestamigos.dominio.Usuario;
 
 public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosViewHolder> {
     private AmigosAdapter instance;
+
+    public List<Usuario> getAmigos() {
+        return amigos;
+    }
+
+    public void setAmigos(List<Usuario> amigos) {
+        this.amigos = amigos;
+    }
+
     private List<Usuario> amigos;
 
     public AmigosAdapter(List<Usuario> amigos)
@@ -66,13 +80,21 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  int posicion = getAdapterPosition();
+                    //Recuperar datos del amigo
+                    int posicion = getAdapterPosition();
+                    Usuario usuario = amigos.get(posicion);
 
                     //Contexto
                     Context context = itemView.getContext();
 
                     //Entrar en detalles
                     Intent intent = new Intent(context, DetallesAmigoActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putLong(BUNDLE_AMIGO_ID, usuario.getId());
+                    extra.putString(BUNDLE_AMIGO_NOMBRE, usuario.getNombre());
+                    extra.putString(BUNDLE_AMIGO_APELLIDOS, usuario.getApellidos());
+                    extra.putString(BUNDLE_AMIGO_EMAIL, usuario.getEmail());
+                    intent.putExtras(extra);
                     context.startActivity(intent);
                 }
             });

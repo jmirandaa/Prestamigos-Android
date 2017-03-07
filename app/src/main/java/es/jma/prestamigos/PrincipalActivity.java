@@ -1,5 +1,7 @@
 package es.jma.prestamigos;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,10 +12,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import es.jma.prestamigos.constantes.KPantallas;
+import es.jma.prestamigos.constantes.KShared;
 import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.utils.ui.UtilUI;
 
 public class PrincipalActivity extends BaseActivity
         implements HistorialFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +41,13 @@ public class PrincipalActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        //Cargar datos del usuario
+        View header = navigationView.getHeaderView(0);
+        TextView tvNombre = (TextView) header.findViewById(R.id.tv_header_nombre);
+        TextView tvEmail = (TextView) header.findViewById(R.id.tv_header_email);
+        tvNombre.setText(UtilUI.getNombre(this));
+        tvEmail.setText(UtilUI.getEmail(this));
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -97,10 +110,16 @@ public class PrincipalActivity extends BaseActivity
         else if (id == R.id.nav_amigos) {
             changeFragment(new AmigosFragment(), R.id.mainFrame, null);
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        }
+        //Cerrar sesión
+        else if (id == R.id.nav_cerrar_sesion) {
+            //Borrar shared preferences
+            SharedPreferences shared = getSharedPreferences(KShared.CLAVE_PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = shared.edit();
+            editor.clear();
+            editor.commit();
+            //Volver al login
+            start(LoginActivity.class, true);
         }
 
         drawer.closeDrawer(GravityCompat.START);

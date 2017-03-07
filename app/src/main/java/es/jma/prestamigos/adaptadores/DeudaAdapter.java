@@ -73,18 +73,48 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
 
 
         //Procesar nombre y apellidos
+        boolean debo=false, meDebe=false;
         String nombre = null;
         String apellidos = null;
+        double cantidad = deuda.getCantidad() - deuda.getSaldado();
+
+        //Si se mira los que deben, el nombre es el origen
 
         if (tipoDeuda.equals(TipoDeuda.DEBEN) && (usuarioOrigen != null))
         {
             nombre = usuarioOrigen.getNombre();
             apellidos = usuarioOrigen.getApellidos();
         }
+        //Si se mira los que debo, el nombre es el destino
         else if (tipoDeuda.equals(TipoDeuda.DEBO) && (usuarioDestino != null))
         {
             nombre = usuarioDestino.getNombre();
             apellidos = usuarioDestino.getApellidos();
+        }
+        //Si se miran todas, es el que tenga un id distinto
+        else if ((tipoDeuda.equals(TipoDeuda.TODAS)) && (usuarioOrigen != null) && (usuarioDestino != null))
+        {
+            long idUsuario = UtilUI.getIdUsuario(holder.itemView.getContext());
+            long idUsuarioOrigen = usuarioOrigen.getId();
+            long idUsuarioDestino = usuarioDestino.getId();
+
+            //Le debo
+            if (idUsuario == idUsuarioOrigen)
+            {
+                nombre = usuarioDestino.getNombre();
+                apellidos = usuarioDestino.getApellidos();
+                debo=true;
+            }
+            //Me debe
+            else if (idUsuario == idUsuarioDestino)
+            {
+                nombre = usuarioOrigen.getNombre();
+                apellidos = usuarioOrigen.getApellidos();
+                meDebe=true;
+            }
+
+            //En este caso usar sólo la cantidad
+            cantidad = deuda.getCantidad();
         }
 
         if (nombre == null)
@@ -93,7 +123,7 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
         }
         if (apellidos == null)
         {
-            apellidos = null;
+            apellidos = "";
         }
 
         //Procesar fecha
@@ -103,7 +133,37 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
         holder.nombre.setText(nombre+" "+apellidos);
         holder.fecha.setText(fechaTexto);
         holder.concepto.setText(deuda.getConcepto());
-        holder.cantidad.setText(deuda.getCantidad() - deuda.getSaldado() +"€");
+        holder.cantidad.setText(cantidad +"€");
+
+        boolean saldada = (deuda.getCantidad() - deuda.getSaldado()) == 0.0;
+        //Si la deuda ha slido saldada, ocultar botones y poner tipo
+        if (saldada)
+        {
+            String texto = null;
+            if (debo)
+            {
+                texto = holder.cantidad.getResources().getText(R.string.dashboard_debia).toString();
+            }
+            else if (meDebe)
+            {
+                texto = holder.cantidad.getResources().getText(R.string.dashboard_medebian).toString();
+
+            }
+            if (texto != null)
+            {
+                holder.cantidad.append(" (");
+                holder.cantidad.append(texto);
+                holder.cantidad.append(")");
+            }
+
+            holder.accion1.setVisibility(View.GONE);
+            holder.accion2.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.accion1.setVisibility(View.VISIBLE);
+            holder.accion2.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -179,18 +239,6 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                     context.startActivity(intent);
                 }
             });
-
-            //Si la deuda ha slido saldada, ocultar botones
-            if (saldada)
-            {
-                accion1.setVisibility(View.GONE);
-                accion2.setVisibility(View.GONE);
-            }
-            else
-            {
-                accion1.setVisibility(View.VISIBLE);
-                accion2.setVisibility(View.VISIBLE);
-            }
 
         }
 

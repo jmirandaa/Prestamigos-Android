@@ -62,4 +62,19 @@ public class UtilUI {
 
         return email;
     }
+
+    /**
+     * Leer el nombre y apellido de las SharedPreferences
+     * @param context
+     * @return
+     */
+    public static String getNombre(Context context)
+    {
+        String nombre = null;
+
+        SharedPreferences shared = context.getSharedPreferences(KShared.CLAVE_PREF, Context.MODE_PRIVATE);
+        nombre = shared.getString(KShared.CLAVE_NOMBRE,"");
+
+        return nombre;
+    }
 }

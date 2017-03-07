@@ -5,8 +5,16 @@ package es.jma.prestamigos.constantes;
  */
 
 public class KShared {
+    //Claves de SharedPreferences
     public static final String CLAVE_PREF = "es.jma.prestamigos.shared";
     public static final String CLAVE_ID = "idUsuario";
     public static final String CLAVE_AVATAR = "avatarUsuario";
     public static final String CLAVE_EMAIL = "claveEmail";
+    public static final String CLAVE_NOMBRE = "claveNombre";
+
+    //Claves de Bundle de detalles amigo
+    public static final String BUNDLE_AMIGO_NOMBRE = "bundleAmigoNombre";
+    public static final String BUNDLE_AMIGO_APELLIDOS = "bundleAmigoApellidos";
+    public static final String BUNDLE_AMIGO_EMAIL= "bundleAmigoEmail";
+    public static final String BUNDLE_AMIGO_ID = "bundleAmigoId";
 }

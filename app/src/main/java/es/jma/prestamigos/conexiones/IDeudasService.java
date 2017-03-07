@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.RespuestaREST;
+import es.jma.prestamigos.dominio.ResumenDeuda;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -36,4 +37,12 @@ public interface IDeudasService {
     @POST("deudas/deuda")
     public Call<RespuestaREST<List<Deuda>>> nuevaDeuda (@Query("idUsuarioOrigen") long idUsuarioOrigen, @Query("idDestino") long idDestino,
                                                          @Query("cantidad") double cantidad, @Query("concepto") String concepto, @Query("tipo") int tipo);
+
+    /**
+     * Información de resumen de deudas
+     * @param idUsuario
+     * @return
+     */
+    @GET("deudas/resumen")
+    public Call<RespuestaREST<ResumenDeuda>> resumenDeudas (@Query("idUsuario") long idUsuario);
 }
