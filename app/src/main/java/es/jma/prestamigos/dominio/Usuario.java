@@ -41,12 +41,18 @@ public class Usuario {
         this.apellidos = apellidos;
     }
 
+    public Usuario(String nombre, String apellidos, String email, String password)
+    {
+        this(nombre,apellidos);
+        this.email = email;
+        this.password = password;
+    }
+
     public Usuario(long id, String email, String nombre, String apellidos)
     {
+        this(nombre,apellidos);
         this.id = id;
         this.email = email;
-        this.nombre = nombre;
-        this.apellidos = apellidos;
     }
 
     //Datos de prueba

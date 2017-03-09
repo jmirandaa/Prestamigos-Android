@@ -9,6 +9,10 @@
     <string name="error_invalid_password">Contraseña demasiado corta</string>
     <string name="error_incorrect_password">Contraseña incorrecta</string>
     <string name="error_field_required">Campo requerido</string>
+    <string name="error_field_short">Campo demasiado corto</string>
+    <string name="error_field_repeat">Campo debe ser igual al anterior</string>
+    <string name="error_user_exist">Usuario ya registrado</string>
+    <string name="error_user_field">Falta algún campo obligatorio</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

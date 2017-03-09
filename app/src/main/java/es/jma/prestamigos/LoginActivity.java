@@ -32,9 +32,11 @@ import es.jma.prestamigos.comandos.Comando;
 import es.jma.prestamigos.comandos.LoginComando;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.constantes.KReqCode;
+import es.jma.prestamigos.constantes.KShared;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventLogin;
 import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 /**
@@ -120,7 +122,7 @@ public class LoginActivity extends BaseActivity {
         View focusView = null;
 
         // Comprobar password
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !UtilTextValidator.isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -131,7 +133,7 @@ public class LoginActivity extends BaseActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else if (!UtilTextValidator.isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
@@ -149,16 +151,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
-    }
 
     /**
      * Shows the progress UI and hides the login form.
@@ -269,12 +261,25 @@ public class LoginActivity extends BaseActivity {
 
     };
 
+    /**
+     * Acción al terminar registro
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         if (requestCode == KReqCode.REQ_CODE_REGISTRO);
         {
             if (resultCode == RegistroActivity.RESULT_OK) {
-                start(PrincipalActivity.class,true);
+                //Rellenar email y password
+                String email = intent.getStringExtra(KShared.BUNDLE_USUARIO_EMAIL);
+                String password = intent.getStringExtra(KShared.BUNDLE_USUARIO_PASSWORD);
+                if ((email != null) && (password != null))
+                {
+                    mEmailView.setText(email);
+                    mPasswordView.setText(password);
+                }
             }
         }
     }

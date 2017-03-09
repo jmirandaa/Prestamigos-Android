@@ -3,7 +3,8 @@ package es.jma.prestamigos.eventbus;
 import es.jma.prestamigos.dominio.ResumenDeuda;
 
 /**
- * Created by tulon on 6/03/17.
+ * Evento de resumen
+ * Created by jmiranda on 6/03/17.
  */
 
 public class EventResumen extends EventBase {

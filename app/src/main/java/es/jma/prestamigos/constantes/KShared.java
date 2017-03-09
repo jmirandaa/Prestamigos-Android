@@ -17,4 +17,8 @@ public class KShared {
     public static final String BUNDLE_AMIGO_APELLIDOS = "bundleAmigoApellidos";
     public static final String BUNDLE_AMIGO_EMAIL= "bundleAmigoEmail";
     public static final String BUNDLE_AMIGO_ID = "bundleAmigoId";
+
+    //Claves de Bundle de registro
+    public static final String BUNDLE_USUARIO_EMAIL = "bundleUsuarioEmail";
+    public static final String BUNDLE_USUARIO_PASSWORD = "bundleUsuarioPassword";
 }

@@ -53,5 +53,13 @@ public interface IUsuariosService {
     @POST("usuarios/amigo")
     public Call<RespuestaREST<Long>> nuevoAmigo  (@Query("emailDestino") String emailDestino, @Query("emailOrigen") String emailOrigen);
 
+    /**
+     * Añadir nuevo usuario
+     * @param usuario
+     * @return
+     */
+    @POST("usuarios/usuario")
+    public Call<RespuestaREST<Boolean>> nuevoUsuario  (@Body Usuario usuario);
+
 
 }

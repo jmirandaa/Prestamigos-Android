@@ -1,7 +1,8 @@
 package es.jma.prestamigos.eventbus;
 
 /**
- * Created by tulon on 21/02/17.
+ * Evento de amigo
+ * Created by jmiranda on 21/02/17.
  */
 
 public class EventAmigo extends EventBase {

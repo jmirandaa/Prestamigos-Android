@@ -5,7 +5,8 @@ import java.util.List;
 import es.jma.prestamigos.dominio.Usuario;
 
 /**
- * Created by tulon on 20/02/17.
+ * Evento de usuarios
+ * Created by jmiranda on 20/02/17.
  */
 
 public class EventUsuarios extends EventBase {

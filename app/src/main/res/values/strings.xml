@@ -10,6 +10,10 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_field_short">This field is too short</string>
+    <string name="error_field_repeat">This field must be the same as above</string>
+    <string name="error_user_exist">This user is already registered</string>
+    <string name="error_user_field">Some field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

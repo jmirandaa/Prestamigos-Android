@@ -5,7 +5,8 @@ import java.util.List;
 import es.jma.prestamigos.dominio.Operacion;
 
 /**
- * Created by tulon on 16/02/17.
+ * Evento de ops
+ * Created by jmiranda on 16/02/17.
  */
 
 public class EventOps extends EventBase {
