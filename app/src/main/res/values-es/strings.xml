@@ -19,7 +19,7 @@
     <string name="registrarse">¿No tienes cuenta? Regístrate</string>
     <string name="password_olvidado">Olvidé mi contraseña</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
-    <string name="sesion">Sesión</string>
+    <string name="sesion">Usuario</string>
 
     <!-- Registro -->
     <string name="titulo_registro">Registro</string>
@@ -39,6 +39,7 @@
     <string name="titulo_historial">Historial</string>
     <string name="titulo_resumen">Resumen</string>
     <string name="titulo_amigos">Amigos</string>
+    <string name="titulo_perfil">Perfil</string>
 
     <string name="titulo_nueva_deuda">Nueva deuda</string>
 
@@ -98,7 +99,8 @@
     <string name="ok">Aceptar</string>
     <string name="cancelar">Cancelar</string>
 
-    <!-- Mensajes de error -->
+    <!-- Mensajes -->
     <string name="msg_error_login">Email o contraseña incorrectos</string>
     <string name="msg_error_conexion">Connection error</string>
+    <string name="msg_perfil_actualizado">Perfil actualizado</string>
 </resources>

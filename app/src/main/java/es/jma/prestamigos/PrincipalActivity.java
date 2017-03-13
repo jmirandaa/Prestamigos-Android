@@ -22,7 +22,7 @@ import es.jma.prestamigos.navegacion.BaseActivity;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 public class PrincipalActivity extends BaseActivity
-        implements HistorialFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
+        implements PerfilFragment.OnFragmentInteractionListener, HistorialFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -120,6 +120,11 @@ public class PrincipalActivity extends BaseActivity
             editor.commit();
             //Volver al login
             start(LoginActivity.class, true);
+        }
+        //Datos perfil
+        else if (id == R.id.nav_perfil)
+        {
+            changeFragment(new PerfilFragment(), R.id.mainFrame, null);
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -1,7 +1,7 @@
 package es.jma.prestamigos.constantes;
 
 /**
- * Created by tulon on 4/02/17.
+ * Created by jmiranda on 4/02/17.
  */
 
 public class KPantallas {
@@ -14,4 +14,5 @@ public class KPantallas {
     public static final int PANTALLA_RESUMEN = 13;
     public static final int PANTALLA_DETALLES_DEUDA = 14;
     public static final int PANTALLA_NUEVA_DEUDA_OTROS = 15;
+    public static final int PANTALLA_PERFIL = 16;
 }

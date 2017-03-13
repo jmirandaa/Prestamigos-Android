@@ -11,6 +11,7 @@ public class KShared {
     public static final String CLAVE_AVATAR = "avatarUsuario";
     public static final String CLAVE_EMAIL = "claveEmail";
     public static final String CLAVE_NOMBRE = "claveNombre";
+    public static final String CLAVE_PASSWORD = "clavePassword";
 
     //Claves de Bundle de detalles amigo
     public static final String BUNDLE_AMIGO_NOMBRE = "bundleAmigoNombre";

@@ -6,6 +6,7 @@ import es.jma.prestamigos.conexiones.IUsuariosService;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.RespuestaREST;
 import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.eventbus.EventGenerico;
 import es.jma.prestamigos.eventbus.EventLogin;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,32 +57,35 @@ public class LoginComando extends Comando implements Callback<RespuestaREST<Usua
 
     @Override
     public void onResponse(Call<RespuestaREST<Usuario>> call, Response<RespuestaREST<Usuario>> response) {
-        //Si estoy en login, ver si el usuario existe
-        if (this.pantalla == KPantallas.PANTALLA_LOGIN)
-        {
             RespuestaREST<Usuario> usuario = response.body();
 
             if (usuario != null) {
                 //Notificar resultado
-                EventLogin eventLogin = new EventLogin(usuario.getContenido());
-                eventLogin.setCodigo(usuario.getCodError());
-                eventLogin.setMsg(usuario.getMsgError());
-                EventBus.getDefault().post(eventLogin);
+                //Si estoy en login, ver si el usuario existe
+                if (this.pantalla == KPantallas.PANTALLA_LOGIN) {
+                    EventLogin eventLogin = new EventLogin(usuario.getContenido());
+                    eventLogin.setCodigo(usuario.getCodError());
+                    eventLogin.setMsg(usuario.getMsgError());
+                    EventBus.getDefault().post(eventLogin);
+                }
+                //Si estoy en perfil, usar evento genérico
+                else if (this.pantalla == KPantallas.PANTALLA_PERFIL)
+                {
+                    EventGenerico<Usuario> eventGenerico = new EventGenerico<Usuario>(usuario.getContenido());
+                    eventGenerico.setCodigo(usuario.getCodError());
+                    eventGenerico.setMsg(usuario.getMsgError());
+                    EventBus.getDefault().post(eventGenerico);
+                }
             }
             else
             {
                 error();
             }
-        }
-
     }
 
     @Override
     public void onFailure(Call<RespuestaREST<Usuario>> call, Throwable t) {
-        if (this.pantalla == KPantallas.PANTALLA_LOGIN)
-        {
            error();
-        }
     }
 
     /**

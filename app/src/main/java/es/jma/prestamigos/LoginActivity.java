@@ -143,6 +143,12 @@ public class LoginActivity extends BaseActivity {
             // Hubo error
             focusView.requestFocus();
         } else {
+            //Guardar contraseña
+            SharedPreferences shared = getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = shared.edit();
+            editor.putString(CLAVE_PASSWORD, password);
+            editor.commit();
+
             // Pantalla carga
             showProgress(true);
             Comando login = new LoginComando(KPantallas.PANTALLA_LOGIN);

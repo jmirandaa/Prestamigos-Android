@@ -350,7 +350,9 @@ public class DeudasOtrosFragment extends BaseFragment {
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    if (mView != null) {
+                        mView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    }
                 }
             });
 
@@ -359,7 +361,9 @@ public class DeudasOtrosFragment extends BaseFragment {
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    if (mProgressView != null) {
+                        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    }
                 }
             });
         } else {
