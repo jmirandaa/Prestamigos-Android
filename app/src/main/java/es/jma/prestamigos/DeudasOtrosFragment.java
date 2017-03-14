@@ -23,6 +23,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -70,7 +71,7 @@ public class DeudasOtrosFragment extends BaseFragment {
     @BindView(R.id.deudas_progress)
     View mProgressView;
     @BindView(R.id.deudas_view)
-    View mView;
+    ScrollView mView;
     @BindView(R.id.coordinator_deudas)
     CoordinatorLayout coordinatorLayout;
 
@@ -124,6 +125,8 @@ public class DeudasOtrosFragment extends BaseFragment {
 
         View v = getView(inflater,R.layout.fragment_deudas_otros,container);
 
+        mView.setSmoothScrollingEnabled(true);
+
         // Barra de búsqueda
         searchView.setVisibility(View.GONE);
 
@@ -132,24 +135,6 @@ public class DeudasOtrosFragment extends BaseFragment {
             @Override
             public boolean onClose() {
                 UtilUI.toggleSearchView(getActionBar(), searchView);
-                return false;
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //Si el texto está vacío, buscar todo
-                if (newText.isEmpty())
-                {
-
-                }
                 return false;
             }
         });
@@ -172,7 +157,7 @@ public class DeudasOtrosFragment extends BaseFragment {
         //List<Deuda> deudas = Deuda.getDatosPrueba();
         List<Deuda> deudas = new ArrayList<>();
 
-        DeudaAdapter adapter = new DeudaAdapter(tipo, deudas);
+        final DeudaAdapter adapter = new DeudaAdapter(tipo, deudas);
         rv.setAdapter(adapter);
 
         //Otros
@@ -190,6 +175,32 @@ public class DeudasOtrosFragment extends BaseFragment {
             getActionBar().setTitle(R.string.titulo_mis_deudas);
         }
         actualizarDeudas();
+
+        //Filtro para búsqueda
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                DeudaAdapter deudaAdapter = (DeudaAdapter) rv.getAdapter();
+                //Si el texto no está vacío, filtrar
+                if (!newText.isEmpty())
+                {
+                    deudaAdapter.getFilter().filter(newText);
+                }
+                else
+                {
+                    deudaAdapter.setDeudas(deudaAdapter.getDeudasSinFiltrar());
+                    deudaAdapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
 
         return v;
     }
@@ -325,8 +336,14 @@ public class DeudasOtrosFragment extends BaseFragment {
         else
         {
             DeudaAdapter adapter = (DeudaAdapter) rv.getAdapter();
-            adapter.setDeudas(deudas);
+            adapter.setDeudasSinFiltrar(deudas);
             adapter.notifyDataSetChanged();
+
+            //Si se está buscando algo, aplicar filtro
+            String buscando = searchView.getQuery().toString();
+            if ((buscando != null) && (!buscando.isEmpty())) {
+                adapter.getFilter().filter(buscando);
+            }
         }
 
         //Actualizar suma

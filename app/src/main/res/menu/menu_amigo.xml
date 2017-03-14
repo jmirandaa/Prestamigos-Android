@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:prestamigos="http://schemas.android.com/apk/res-auto">
 
     <item android:title="@string/add_friend"
+        android:id="@+id/amigos_nuevo"
         prestamigos:showAsAction="ifRoom"
         android:icon="@drawable/ic_account_plus" />
 </menu>

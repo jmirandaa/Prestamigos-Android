@@ -50,7 +50,7 @@ public class NuevoInvitadoComando extends Comando implements Callback<RespuestaR
     @Override
     public void onResponse(Call<RespuestaREST<Long>> call, Response<RespuestaREST<Long>> response) {
         //Si estoy en nueva deuda
-        if (this.pantalla == KPantallas.PANTALLA_NUEVA_DEUDA_OTROS)
+        if ((this.pantalla == KPantallas.PANTALLA_NUEVA_DEUDA_OTROS) || (this.pantalla == KPantallas.PANTALLA_AMIGOS))
         {
             RespuestaREST<Long> amigo = response.body();
 

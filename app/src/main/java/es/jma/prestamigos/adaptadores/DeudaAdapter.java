@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import es.jma.prestamigos.dominio.Operacion;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.enums.TipoDeuda;
 import es.jma.prestamigos.enums.TipoOperacion;
+import es.jma.prestamigos.filtros.DeudaFilter;
 import es.jma.prestamigos.utils.ui.UtilFechas;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
@@ -38,15 +41,18 @@ import es.jma.prestamigos.utils.ui.UtilUI;
  * Created by tulon on 3/02/17.
  */
 
-public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHolder> {
+public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHolder> implements Filterable {
     private DeudaAdapter instance;
     private List<Deuda> deudas;
+    private List<Deuda> deudasSinFiltrar;
     private TipoDeuda tipoDeuda;
+    private DeudaFilter deudaFilter;
 
     public DeudaAdapter(TipoDeuda tipoDeuda, List<Deuda> deudas)
     {
         this.instance = this;
         this.deudas = deudas;
+        this.deudasSinFiltrar = deudas;
         this.tipoDeuda = tipoDeuda;
     }
 
@@ -54,8 +60,21 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
         return deudas;
     }
 
+    public TipoDeuda getTipoDeuda() {
+        return tipoDeuda;
+    }
+
     public void setDeudas(List<Deuda> deudas) {
         this.deudas = deudas;
+    }
+
+    public List<Deuda> getDeudasSinFiltrar() {
+        return deudasSinFiltrar;
+    }
+
+    public void setDeudasSinFiltrar(List<Deuda> deudasSinFiltrar) {
+        this.deudasSinFiltrar = deudasSinFiltrar;
+        this.deudas = deudasSinFiltrar;
     }
 
     @Override
@@ -174,6 +193,15 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (deudaFilter == null)
+        {
+            deudaFilter = new DeudaFilter(this);
+        }
+        return deudaFilter;
     }
 
     public class DeudaViewHolder extends RecyclerView.ViewHolder {

@@ -144,13 +144,17 @@ public class NuevaDeudaActivity extends BaseActivity {
                 Comando comando = new NuevoInvitadoComando(KPantallas.PANTALLA_NUEVA_DEUDA_OTROS);
                 String[] partesNombre = nombreAmigo.split(" ");
                 String nombre = partesNombre[0];
-                String apellidos = partesNombre[1];
+                StringBuilder apellidos = new StringBuilder(partesNombre[1]);
                 if (partesNombre.length > 2)
                 {
-                    apellidos += partesNombre[2];
+                    for (int i=2;i<partesNombre.length;i++)
+                    {
+                        apellidos.append(" ");
+                        apellidos.append(partesNombre[i]);
+                    }
                 }
 
-                Usuario usuario = new Usuario(nombre,apellidos);
+                Usuario usuario = new Usuario(nombre,apellidos.toString());
                 comando.ejecutar(usuario, emailOrigen);
             }
 

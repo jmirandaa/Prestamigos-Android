@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,14 +12,20 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,11 +39,15 @@ import es.jma.prestamigos.adaptadores.AmigosAdapter;
 import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.comandos.AmigosComando;
 import es.jma.prestamigos.comandos.Comando;
+import es.jma.prestamigos.comandos.NuevoAmigoComando;
+import es.jma.prestamigos.comandos.NuevoInvitadoComando;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.eventbus.EventAmigo;
 import es.jma.prestamigos.eventbus.EventUsuarios;
 import es.jma.prestamigos.navegacion.BaseFragment;
+import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 
@@ -142,6 +153,30 @@ public class AmigosFragment extends BaseFragment {
 
     };
 
+    /**
+     * Responder a eventos de amigo
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventAmigo(EventAmigo event) {
+        Long idAmigo = event.getIdAmigo();
+
+        //Si es error de conexión
+        if (event.getCodigo() == -1)
+        {
+            Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
+                    .show();
+        }
+        //En caso contrario, actualizar listado amigos
+        else
+        {
+            actualizarAmigos();
+        }
+
+        showProgress(false);
+
+    };
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -184,6 +219,130 @@ public class AmigosFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.menu_amigo, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            //Botón de añadir amigo local
+            case R.id.amigos_nuevo:
+                //Crear diálogo
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+                final View dialogView = layoutInflater.inflate(R.layout.dialog_accion_nuevo_amigo, null);
+                builder.setView(dialogView);
+                builder.setTitle(getResources().getString(R.string.add_friend));
+
+                final EditText mNombreView = (EditText) dialogView.findViewById(R.id.campo_nombre);
+                final EditText mApellidosView = (EditText) dialogView.findViewById(R.id.campo_apellidos);
+
+                //Botón aceptar
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String nombre = mNombreView.getText().toString();
+                        String apellidos = mApellidosView.getText().toString();
+
+                        Usuario usuario = new Usuario(nombre, apellidos);
+                        String emailOrigen = UtilUI.getEmail(getContext());
+                        Comando nuevoAmigo = new NuevoInvitadoComando(KPantallas.PANTALLA_AMIGOS);
+                        nuevoAmigo.ejecutar(usuario, emailOrigen);
+                        showProgress(true);
+                    }
+                });
+
+                //Botón cancelar
+                builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+
+                //Abrir diálogo
+                final AlertDialog dialog = builder.create();
+                //Desactivar botón OK
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+
+                mNombreView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (comprobarNombreApellidos(mNombreView, mApellidosView))
+                        {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }
+                        else
+                        {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                mApellidosView.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (comprobarNombreApellidos(mNombreView, mApellidosView))
+                        {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }
+                        else
+                        {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    /**
+     * Comprobar si el nombre y apellidos son correctos
+     * @param mNombreView
+     * @param mApellidosView
+     * @return
+     */
+    public boolean comprobarNombreApellidos(EditText mNombreView, EditText mApellidosView)
+    {
+        boolean correcto = true;
+
+        String nombre = mNombreView.getText().toString();
+        String apellidos = mApellidosView.getText().toString();
+
+        if (TextUtils.isEmpty(nombre)) {
+            mNombreView.setError(getString(R.string.error_field_required));
+            correcto = false;
+        }
+        if (TextUtils.isEmpty(apellidos)) {
+            mApellidosView.setError(getString(R.string.error_field_required));
+            correcto = false;
+        }
+        return correcto;
     }
 
     /**
