@@ -13,6 +13,8 @@
     <string name="error_field_repeat">Campo debe ser igual al anterior</string>
     <string name="error_user_exist">Usuario ya registrado</string>
     <string name="error_user_field">Falta algún campo obligatorio</string>
+    <string name="error_surname_field">Apellido obligatorio</string>
+    <string name="error_concept">Campo debe ser numérico</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -73,6 +75,7 @@
 
     <!-- Detalles amigo-->
     <string name="add_friend">Añadir nuevo amigo</string>
+    <string name="delete_friend">Borrar amigo</string>
     <string name="titulo_detalles_amigo">Amigo</string>
 
     <!-- Dashboard -->

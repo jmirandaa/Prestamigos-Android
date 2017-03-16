@@ -7,4 +7,5 @@ package es.jma.prestamigos.constantes;
 public class KReqCode {
     public static final int REQ_CODE_REGISTRO = 1;
     public static final int REQ_CODE_NUEVA_DEUDA = 2;
+    public static final int REQ_CODE_BORRAR_AMIGO = 3;
 }

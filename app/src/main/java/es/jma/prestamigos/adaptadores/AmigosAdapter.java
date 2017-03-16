@@ -4,9 +4,12 @@ import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_NOMBRE;
 import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_APELLIDOS;
 import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_EMAIL;
 import static es.jma.prestamigos.constantes.KShared.BUNDLE_AMIGO_ID;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +21,12 @@ import java.util.List;
 
 import es.jma.prestamigos.DetallesAmigoActivity;
 import es.jma.prestamigos.NuevaDeudaActivity;
+import es.jma.prestamigos.PrincipalActivity;
 import es.jma.prestamigos.R;
+import es.jma.prestamigos.constantes.KReqCode;
 import es.jma.prestamigos.dominio.Usuario;
+import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.navegacion.BaseFragment;
 
 /**
  * Created by tulon on 3/02/17.
@@ -37,11 +44,13 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosView
     }
 
     private List<Usuario> amigos;
+    private BaseFragment fragment;
 
-    public AmigosAdapter(List<Usuario> amigos)
+    public AmigosAdapter(List<Usuario> amigos, BaseFragment fragment)
     {
         this.instance = this;
         this.amigos = amigos;
+        this.fragment = fragment;
     }
 
     @Override
@@ -84,18 +93,13 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosView
                     int posicion = getAdapterPosition();
                     Usuario usuario = amigos.get(posicion);
 
-                    //Contexto
-                    Context context = itemView.getContext();
-
                     //Entrar en detalles
-                    Intent intent = new Intent(context, DetallesAmigoActivity.class);
                     Bundle extra = new Bundle();
                     extra.putLong(BUNDLE_AMIGO_ID, usuario.getId());
                     extra.putString(BUNDLE_AMIGO_NOMBRE, usuario.getNombre());
                     extra.putString(BUNDLE_AMIGO_APELLIDOS, usuario.getApellidos());
                     extra.putString(BUNDLE_AMIGO_EMAIL, usuario.getEmail());
-                    intent.putExtras(extra);
-                    context.startActivity(intent);
+                    fragment.start(DetallesAmigoActivity.class, extra, KReqCode.REQ_CODE_BORRAR_AMIGO);
                 }
             });
 

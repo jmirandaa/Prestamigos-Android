@@ -6,6 +6,7 @@ import es.jma.prestamigos.dominio.RespuestaREST;
 import es.jma.prestamigos.dominio.Usuario;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -53,6 +54,15 @@ public interface IUsuariosService {
      */
     @POST("usuarios/amigo")
     public Call<RespuestaREST<Long>> nuevoAmigo  (@Query("emailDestino") String emailDestino, @Query("emailOrigen") String emailOrigen);
+
+    /**
+     * Borrar amigo
+     * @param emailOrigen
+     * @param idAmigo
+     * @return
+     */
+    @DELETE("usuarios/amigo")
+    public Call<RespuestaREST<Boolean>> borrarAmigo  (@Query("emailOrigen") String emailOrigen, @Query("idAmigo") long idAmigo);
 
     /**
      * Añadir nuevo usuario

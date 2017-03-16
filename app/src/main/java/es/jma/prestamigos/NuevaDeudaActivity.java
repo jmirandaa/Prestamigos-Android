@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,16 +37,14 @@ import es.jma.prestamigos.eventbus.EventAmigo;
 import es.jma.prestamigos.eventbus.EventDeudas;
 import es.jma.prestamigos.eventbus.EventUsuarios;
 import es.jma.prestamigos.navegacion.BaseActivity;
+import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 import static es.jma.prestamigos.DeudasOtrosFragment.TIPO_DEUDA;
 
 /**
  * FALTA:
- * - Comprobar campos antes de nueva deuda
- * - Mejorar composición nombre y apellidos
  * - Probar con email
- * - Probar con nuevo usuario
  */
 
 public class NuevaDeudaActivity extends BaseActivity {
@@ -121,10 +120,68 @@ public class NuevaDeudaActivity extends BaseActivity {
     private void nuevaDeuda()
     {
         //Ver si el usuario es amigo o no
+        boolean correcto = true;
         String nombreAmigo = searchView.getText().toString();
-        if ((nombreAmigo == null) || (nombreAmigo.isEmpty()))
+        String concepto = mConcepto.getText().toString();
+        String cantidadString = mCantidad.getText().toString();
+
+        //Validar nombre o email
+        View focusView = null;
+        if (TextUtils.isEmpty(nombreAmigo)) {
+            searchView.setError(getString(R.string.error_field_required));
+            focusView = searchView;
+            correcto = false;
+        }
+        else if (!UtilTextValidator.isStringLarge(nombreAmigo)) {
+            searchView.setError(getString(R.string.error_field_short));
+            focusView = searchView;
+            correcto = false;
+        }
+        else if ((!UtilTextValidator.isEmailValid(nombreAmigo)) && (nombreAmigo.split(" ").length < 2))
         {
-            //Error campo
+            searchView.setError(getString(R.string.error_surname_field));
+            focusView = searchView;
+            correcto = false;
+
+        }
+
+        //Concepto
+        if (TextUtils.isEmpty(concepto)) {
+            mConcepto.setError(getString(R.string.error_field_required));
+            focusView = mConcepto;
+            correcto = false;
+        }
+        else if (!UtilTextValidator.isStringLarge(concepto)) {
+            mConcepto.setError(getString(R.string.error_field_short));
+            focusView = mConcepto;
+            correcto = false;
+        }
+
+        //Cantidad
+        if (TextUtils.isEmpty(cantidadString)) {
+            mCantidad.setError(getString(R.string.error_field_required));
+            focusView = mCantidad;
+            correcto = false;
+        }
+        else
+        {
+            try
+            {
+                Double.parseDouble(cantidadString);
+            }
+            catch (NumberFormatException e)
+            {
+                mCantidad.setError(getString(R.string.error_concept));
+                focusView = mCantidad;
+                correcto = false;
+            }
+        }
+
+
+        //Si los datos son correctos, enviar
+        if ((!correcto) && (focusView != null))
+        {
+            focusView.requestFocus();
         }
         else
         {

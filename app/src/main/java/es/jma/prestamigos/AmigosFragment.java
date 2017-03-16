@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ import es.jma.prestamigos.comandos.Comando;
 import es.jma.prestamigos.comandos.NuevoAmigoComando;
 import es.jma.prestamigos.comandos.NuevoInvitadoComando;
 import es.jma.prestamigos.constantes.KPantallas;
+import es.jma.prestamigos.constantes.KReqCode;
 import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventAmigo;
@@ -91,7 +93,7 @@ public class AmigosFragment extends BaseFragment {
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         List<Usuario> amigos = new ArrayList<>();
 
-        AmigosAdapter adapter = new AmigosAdapter(amigos);
+        AmigosAdapter adapter = new AmigosAdapter(amigos, this);
         rv.setAdapter(adapter);
 
         //Actualizar datos
@@ -343,6 +345,22 @@ public class AmigosFragment extends BaseFragment {
             correcto = false;
         }
         return correcto;
+    }
+
+    /**
+     * Si se vuelve de borrar amigo, actualizar datos
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        if (requestCode == KReqCode.REQ_CODE_BORRAR_AMIGO);
+        {
+            if (resultCode == DetallesAmigoActivity.RESULT_OK) {
+                actualizarAmigos();
+            }
+        }
     }
 
     /**

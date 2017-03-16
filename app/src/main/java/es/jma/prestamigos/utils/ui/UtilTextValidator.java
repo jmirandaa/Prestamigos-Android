@@ -20,6 +20,16 @@ public class UtilTextValidator {
     }
 
     /**
+     * Validar tamaño
+     * @param texto
+     * @return
+     */
+    public static boolean isStringLarge(String texto)
+    {
+        return ((texto != null) && (texto.length() >= 3));
+    }
+
+    /**
      * Validar password
      * @param password
      * @return

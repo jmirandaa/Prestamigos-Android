@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:prestamigos="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/delete_friend"
+        android:icon="@drawable/ic_account_remove"
+        android:id="@+id/accion_borrar_amigo"
+        prestamigos:showAsAction="ifRoom" />
+</menu>

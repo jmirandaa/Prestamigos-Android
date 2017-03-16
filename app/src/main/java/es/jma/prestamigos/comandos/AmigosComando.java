@@ -50,7 +50,7 @@ public class AmigosComando extends Comando implements Callback<RespuestaREST<Lis
 
     @Override
     public void onResponse(Call<RespuestaREST<List<Usuario>>> call, Response<RespuestaREST<List<Usuario>>> response) {
-        //Si estoy en pantalla de nueva deuda
+        //Si estoy en pantalla de nueva deuda o de amigos
         if ((this.pantalla == KPantallas.PANTALLA_NUEVA_DEUDA_OTROS) || (this.pantalla == KPantallas.PANTALLA_AMIGOS))
         {
             RespuestaREST<List<Usuario>> usuarios = response.body();
