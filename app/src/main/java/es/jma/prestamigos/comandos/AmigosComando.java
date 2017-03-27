@@ -16,6 +16,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
+ * Hacer la llamada para obtener el listado de amigos
  * Created by jmiranda on 20/02/17.
  */
 

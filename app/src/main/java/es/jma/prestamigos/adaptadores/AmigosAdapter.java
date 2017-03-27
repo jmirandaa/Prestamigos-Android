@@ -29,7 +29,8 @@ import es.jma.prestamigos.navegacion.BaseActivity;
 import es.jma.prestamigos.navegacion.BaseFragment;
 
 /**
- * Created by tulon on 3/02/17.
+ * Adapter para la lista de amigos
+ * Created by jmiranda on 3/02/17.
  */
 
 public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosViewHolder> {
@@ -63,7 +64,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigosView
     @Override
     public void onBindViewHolder(AmigosViewHolder holder, int position) {
         holder.nombre.setText(amigos.get(position).getNombre()+" "+amigos.get(position).getApellidos());
-        //holder.cantidad.setText(deudas.get(position).getCantidad()+"€");
     }
 
     @Override

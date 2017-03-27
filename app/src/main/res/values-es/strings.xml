@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Prestamigos</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Contraseña</string>
@@ -22,6 +24,12 @@
     <string name="password_olvidado">Olvidé mi contraseña</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
     <string name="sesion">Usuario</string>
+
+    <!-- Recuperar contraseña -->
+    <string name="titulo_recuperar">Recuperar contraseña</string>
+    <string name="campo_codigo">Código de seguridad</string>
+    <string name="campo_nuevo_password">Nueva contraseña</string>
+    <string name="accion_obtener_codigo">Obtener código</string>
 
     <!-- Registro -->
     <string name="titulo_registro">Registro</string>
@@ -99,6 +107,7 @@
     <string name="detalles_deuda_pagado">Pagado</string>
 
     <string name="action_settings">Settings</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">Aceptar</string>
     <string name="cancelar">Cancelar</string>
 
@@ -106,4 +115,5 @@
     <string name="msg_error_login">Email o contraseña incorrectos</string>
     <string name="msg_error_conexion">Connection error</string>
     <string name="msg_perfil_actualizado">Perfil actualizado</string>
+    <string name="msg_error_codigo">Código no válido</string>
 </resources>

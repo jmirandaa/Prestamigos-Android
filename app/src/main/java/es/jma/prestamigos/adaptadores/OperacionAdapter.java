@@ -18,7 +18,8 @@ import es.jma.prestamigos.enums.TipoOperacion;
 import es.jma.prestamigos.utils.ui.UtilFechas;
 
 /**
- * Created by tulon on 8/02/17.
+ * Adapter para el listado de operaciones
+ * Created by jmiranda on 8/02/17.
  */
 
 public class OperacionAdapter extends RecyclerView.Adapter<OperacionAdapter.OperacionViewHolder> {

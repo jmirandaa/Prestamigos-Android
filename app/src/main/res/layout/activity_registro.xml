@@ -59,7 +59,7 @@
                         android:contentDescription="@string/campo_nombre_amigo"
                         android:src="@drawable/ic_account"
                         app:srcCompat="@drawable/ic_account"
-                        app:civ_border_width="1dp"
+                        app:civ_border_width="0dp"
                         app:civ_border_color="@color/colorPrimary"
                         android:layout_marginTop="@dimen/paddin_cantidad_vertical"
                         android:layout_marginBottom="@dimen/paddin_cantidad_vertical" />
@@ -74,7 +74,8 @@
                         android:layout_marginTop="55dp"
                         android:layout_marginLeft="230dp"
                         app:backgroundTint="@android:color/holo_red_light"
-                        app:pressedTranslationZ="@dimen/padding_icon_field" />
+                        app:pressedTranslationZ="@dimen/padding_icon_field"
+                        android:visibility="gone" />
 
 
                 </RelativeLayout>

@@ -17,7 +17,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 21/02/17.
+ * Hacer la llamada para crear una deuda nueva
+ * Created by jmiranda on 21/02/17.
  */
 
 public class NuevaDeudaComando extends Comando implements Callback<RespuestaREST<List<Deuda>>> {

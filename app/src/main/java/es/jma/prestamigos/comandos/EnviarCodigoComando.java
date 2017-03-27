@@ -2,7 +2,7 @@ package es.jma.prestamigos.comandos;
 
 import org.greenrobot.eventbus.EventBus;
 
-import es.jma.prestamigos.conexiones.IUsuariosService;
+import es.jma.prestamigos.conexiones.IRecordarService;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.dominio.RespuestaREST;
 import es.jma.prestamigos.eventbus.EventGenerico;
@@ -11,13 +11,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static es.jma.prestamigos.constantes.KAccion.ACCION_RECUPERAR_CODIGO;
+
 /**
- * Hacer la llamada para borrar amigo
- * Created by jmiranda on 16/03/17.
+ * Hacer la llamada para enviar código de recordar contraseña
+ * Created by jmiranda on 22/03/17.
  */
 
-public class BorrarAmigoComando extends Comando implements Callback<RespuestaREST<Boolean>> {
-    public BorrarAmigoComando(int pantalla) {
+public class EnviarCodigoComando extends Comando implements Callback<RespuestaREST<Boolean>> {
+    public EnviarCodigoComando(int pantalla) {
         super(pantalla);
     }
 
@@ -25,19 +27,18 @@ public class BorrarAmigoComando extends Comando implements Callback<RespuestaRES
     public void ejecutar(Object... args) {
         try {
             //Controlar argumentos
-            if (args.length != 2)
+            if (args.length != 1)
             {
-                throw new RuntimeException("El argumento 1 debe ser el email del usuario y el argumento 2 el id del amigo");
+                throw new RuntimeException("El argumento 1 debe ser el email del usuario");
             }
             String email = (String) args[0];
-            long idAmigo = (long) args[1];
 
             //Construir petición
             Retrofit retrofit = construir();
-            IUsuariosService usuariosService = retrofit.create(IUsuariosService.class);
+            IRecordarService recordarService = retrofit.create(IRecordarService.class);
 
             //Llamar de forma asíncrona
-            Call<RespuestaREST<Boolean>> call = usuariosService.borrarAmigo(email,idAmigo);
+            Call<RespuestaREST<Boolean>> call = recordarService.enviarEmail(email);
             call.enqueue(this);
         }
         catch (RuntimeException e)
@@ -48,8 +49,8 @@ public class BorrarAmigoComando extends Comando implements Callback<RespuestaRES
 
     @Override
     public void onResponse(Call<RespuestaREST<Boolean>> call, Response<RespuestaREST<Boolean>> response) {
-        //Si estoy en pantalla de detalles de amigo
-        if (this.pantalla == KPantallas.PANTALLA_DETALLES_AMIGO)
+        //Pantalla de recordar contraseña
+        if (this.pantalla == KPantallas.PANTALLA_RECORDAR_CONTRASEÑA)
         {
             RespuestaREST<Boolean> respuesta = response.body();
 
@@ -57,10 +58,10 @@ public class BorrarAmigoComando extends Comando implements Callback<RespuestaRES
                 Boolean contenido = respuesta.getContenido();
 
                 //Notificar resultado
-                EventGenerico<Boolean> eventBorrar = new EventGenerico<Boolean>(contenido);
-                eventBorrar.setCodigo(respuesta.getCodError());
-                eventBorrar.setMsg(respuesta.getMsgError());
-                EventBus.getDefault().post(eventBorrar);
+                EventGenerico<Boolean> eventGenerico = new EventGenerico<Boolean>(contenido);
+                eventGenerico.setCodigo(ACCION_RECUPERAR_CODIGO);
+                eventGenerico.setMsg(respuesta.getMsgError());
+                EventBus.getDefault().post(eventGenerico);
             }
             else
             {
@@ -80,8 +81,8 @@ public class BorrarAmigoComando extends Comando implements Callback<RespuestaRES
     private void error()
     {
         //Notificar resultado
-        EventGenerico<Boolean> eventBorrar = new EventGenerico<Boolean>(false);
-        eventBorrar.setCodigo(-1);
-        EventBus.getDefault().post(eventBorrar);
+        EventGenerico<Boolean> eventGenerico = new EventGenerico<>(false);
+        eventGenerico.setCodigo(-1);
+        EventBus.getDefault().post(eventGenerico);
     }
 }

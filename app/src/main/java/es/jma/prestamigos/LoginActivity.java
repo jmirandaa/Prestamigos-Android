@@ -1,18 +1,12 @@
 package es.jma.prestamigos;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import static es.jma.prestamigos.constantes.KShared.*;
-
-import android.os.Build;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,8 +33,17 @@ import es.jma.prestamigos.navegacion.BaseActivity;
 import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
+import static es.jma.prestamigos.constantes.KShared.CLAVE_AVATAR;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_EMAIL;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_ID;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_NOMBRE;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_PASSWORD;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_PREF;
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
+
 /**
- * A login screen that offers login via email/password.
+ * Login
+ * Created by jmiranda
  */
 public class LoginActivity extends BaseActivity {
 
@@ -59,6 +62,8 @@ public class LoginActivity extends BaseActivity {
     Button mEmailSignInButton;
     @BindView(R.id.textViewRegistro)
     TextView tvRegistro;
+    @BindView(R.id.textViewOlvidado)
+    TextView tvOlvidado;
 
     private Activity activity = this;
 
@@ -92,6 +97,16 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 start(RegistroActivity.class,KReqCode.REQ_CODE_REGISTRO);
+            }
+        });
+
+        //Botón olvidado
+        tvOlvidado.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle extras = new Bundle();
+                extras.putString(KShared.BUNDLE_AMIGO_EMAIL, mEmailView.getText().toString());
+                start(RecuperarPasswordActivity.class, extras, KReqCode.REQ_CODE_PASSWORD_OLVIDADO);
             }
         });
 
@@ -150,50 +165,12 @@ public class LoginActivity extends BaseActivity {
             editor.commit();
 
             // Pantalla carga
-            showProgress(true);
+            showProgress(true, mLoginFormView, mProgressView, this);
             Comando login = new LoginComando(KPantallas.PANTALLA_LOGIN);
             login.ejecutar(email,password);
 
         }
     }
-
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
 
     @Override
     public void onStart() {
@@ -214,7 +191,7 @@ public class LoginActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventLogin(EventLogin event) {
         Usuario usuario = event.getUsuario();
-        showProgress(false);
+        showProgress(false, mLoginFormView, mProgressView, this);
 
         //Si no existe, informar
         if (event.getCodigo() == 1)

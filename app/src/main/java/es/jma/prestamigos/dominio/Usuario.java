@@ -9,7 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by tulon on 3/02/17.
+ * POJO Usuario
+ * Created by jmiranda on 3/02/17.
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)

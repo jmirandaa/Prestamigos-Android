@@ -1,13 +1,10 @@
 package es.jma.prestamigos;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.mindorks.paracamera.Camera;
 
@@ -32,7 +28,6 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.jma.prestamigos.comandos.Comando;
 import es.jma.prestamigos.comandos.NuevoUsuarioComando;
-import es.jma.prestamigos.constantes.KAccion;
 import es.jma.prestamigos.constantes.KMensajes;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.constantes.KShared;
@@ -41,6 +36,12 @@ import es.jma.prestamigos.eventbus.EventRegistro;
 import es.jma.prestamigos.navegacion.BaseActivity;
 import es.jma.prestamigos.utils.ui.UtilTextValidator;
 
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
+
+/**
+ * Registro
+ * Created by jmiranda
+ */
 public class RegistroActivity extends BaseActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_CAMERA_PERMISSION = 2;
@@ -149,7 +150,7 @@ public class RegistroActivity extends BaseActivity {
 
         //En caso de que sí, enviar
         if (correcto) {
-            showProgress(true);
+            showProgress(true, mView, mProgressView, this);
             Comando registro = new NuevoUsuarioComando(KPantallas.PANTALLA_REGISTRO);
             Usuario usuario = new Usuario(nombre, apellidos, email, password);
             registro.ejecutar(usuario);
@@ -336,44 +337,8 @@ public class RegistroActivity extends BaseActivity {
             finish();
         }
 
-        showProgress(false);
+        showProgress(false, mView, mProgressView, this);
 
     };
 
-    /**
-     * Barra de progreso
-     * @param show
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 }

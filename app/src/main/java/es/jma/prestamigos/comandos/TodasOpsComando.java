@@ -17,7 +17,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 16/02/17.
+ * Hacer la llamada para obtener todas las operaciones
+ * Created by jmiranda on 16/02/17.
  */
 
 public class TodasOpsComando extends Comando implements Callback<RespuestaREST<List<Operacion>>> {

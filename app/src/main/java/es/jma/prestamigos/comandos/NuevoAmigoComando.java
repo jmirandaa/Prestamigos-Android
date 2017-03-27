@@ -12,7 +12,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 21/02/17.
+ * Hacer la llamada para añadir un nuevo amigo
+ * Created by jmiranda on 21/02/17.
  */
 
 public class NuevoAmigoComando extends Comando implements Callback<RespuestaREST<Long>> {

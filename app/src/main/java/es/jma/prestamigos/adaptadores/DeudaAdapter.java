@@ -38,7 +38,8 @@ import es.jma.prestamigos.utils.ui.UtilFechas;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 /**
- * Created by tulon on 3/02/17.
+ * Adapter para el listado de deudas
+ * Created by jmiranda on 3/02/17.
  */
 
 public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHolder> implements Filterable {
@@ -305,9 +306,6 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
             //Botón aceptar
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
-                    //deudas.remove(0);
-                    //instance.notifyDataSetChanged();
 
                     //Recuperar valor
                     EditText etCantidad = (EditText) dialogView.findViewById(R.id.campo_cantidad);

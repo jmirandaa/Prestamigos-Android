@@ -4,7 +4,7 @@ import java.text.Normalizer;
 
 /**
  * Clase de utilidad para validar strings
- * Created by jmirando on 9/03/17.
+ * Created by jmiranda on 9/03/17.
  */
 
 public class UtilTextValidator {

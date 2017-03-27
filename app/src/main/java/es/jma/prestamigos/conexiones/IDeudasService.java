@@ -11,7 +11,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Created by tulon on 15/02/17.
+ * Interfaz Retrofit de operaciones de deudas
+ * Created by jmiranda on 15/02/17.
  */
 
 public interface IDeudasService {

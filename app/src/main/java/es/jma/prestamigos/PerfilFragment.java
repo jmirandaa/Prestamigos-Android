@@ -1,14 +1,8 @@
 package es.jma.prestamigos;
 
-import static es.jma.prestamigos.constantes.KShared.*;
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -30,17 +24,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import es.jma.prestamigos.comandos.ActualizarUsuarioComando;
 import es.jma.prestamigos.comandos.Comando;
 import es.jma.prestamigos.comandos.LoginComando;
-import es.jma.prestamigos.comandos.NuevoUsuarioComando;
 import es.jma.prestamigos.constantes.KPantallas;
-import es.jma.prestamigos.constantes.KShared;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventGenerico;
 import es.jma.prestamigos.navegacion.BaseFragment;
 import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
-import okhttp3.internal.Util;
+
+import static es.jma.prestamigos.constantes.KShared.CLAVE_NOMBRE;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_PASSWORD;
+import static es.jma.prestamigos.constantes.KShared.CLAVE_PREF;
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
 
 /**
+ * Perfil de usuario
  * Created by jmiranda on 13/03/17.
  */
 
@@ -191,7 +188,7 @@ public class PerfilFragment extends BaseFragment {
 
         //En caso de que sí, enviar
         if (correcto) {
-            showProgress(true);
+            showProgress(true, mView, mProgressView, getContext());
 
             //Actualizar shared
             SharedPreferences shared = getContext().getSharedPreferences(CLAVE_PREF, Context.MODE_PRIVATE);
@@ -231,7 +228,7 @@ public class PerfilFragment extends BaseFragment {
     private void cargarDatos()
     {
         // Pantalla carga
-        showProgress(true);
+        showProgress(true, mView, mProgressView, getContext());
         Comando login = new LoginComando(KPantallas.PANTALLA_PERFIL);
         String email = UtilUI.getEmail(getContext());
         String password = UtilUI.getPassword(getContext());
@@ -264,7 +261,7 @@ public class PerfilFragment extends BaseFragment {
                         .show();
             }
 
-            showProgress(false);
+            showProgress(false, mView, mProgressView, getContext());
         }
     };
 
@@ -294,7 +291,7 @@ public class PerfilFragment extends BaseFragment {
 
             }
 
-            showProgress(false);
+            showProgress(false, mView, mProgressView, getContext());
         }
     };
 
@@ -319,40 +316,4 @@ public class PerfilFragment extends BaseFragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    /**
-     * Barra de progreso
-     * @param show
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 }

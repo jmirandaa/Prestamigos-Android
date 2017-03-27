@@ -1,12 +1,8 @@
 package es.jma.prestamigos;
 
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -29,9 +25,12 @@ import es.jma.prestamigos.eventbus.EventResumen;
 import es.jma.prestamigos.navegacion.BaseFragment;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
+
 
 /**
- * A simple {@link Fragment} subclass.
+ * Resumen
+ * Created by jmiranda
  */
 public class DashboardFragment extends BaseFragment {
 
@@ -109,7 +108,7 @@ public class DashboardFragment extends BaseFragment {
         //Conectarse
         if (idUsuario != -1)
         {
-            showProgress(true);
+            showProgress(true, mView, mProgressView, getContext());
             resumen.ejecutar(idUsuario);
         }
     }
@@ -146,7 +145,7 @@ public class DashboardFragment extends BaseFragment {
             tvNumDeben.setText(String.valueOf(resumenDeuda.getNumDeudasMeDeben()));
         }
 
-        showProgress(false);
+        showProgress(false, mView, mProgressView, getContext());
 
     };
 
@@ -169,39 +168,6 @@ public class DashboardFragment extends BaseFragment {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
 }

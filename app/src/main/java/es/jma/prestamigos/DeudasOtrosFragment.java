@@ -1,15 +1,8 @@
 package es.jma.prestamigos;
 
-import static es.jma.prestamigos.constantes.KShared.*;
-
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -46,14 +39,12 @@ import es.jma.prestamigos.navegacion.BaseFragment;
 import es.jma.prestamigos.utils.ui.UtilSuma;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
+
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DeudasOtrosFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DeudasOtrosFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Deudas
+ * Created by jmiranda
  */
 public class DeudasOtrosFragment extends BaseFragment {
 
@@ -216,7 +207,7 @@ public class DeudasOtrosFragment extends BaseFragment {
         //Conectarse
         if (idUsuario != -1)
         {
-            showProgress(true);
+            showProgress(true, mView, mProgressView, getContext());
             deudas.ejecutar(idUsuario, tipo, false);
         }
     }
@@ -350,44 +341,8 @@ public class DeudasOtrosFragment extends BaseFragment {
         double suma = UtilSuma.sumarDeudas(deudas);
         tvTotal.setText(String.valueOf(suma) +" €");
 
-        showProgress(false);
+        showProgress(false, mView, mProgressView, getContext());
 
     };
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (mView != null) {
-                        mView.setVisibility(show ? View.GONE : View.VISIBLE);
-                    }
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (mProgressView != null) {
-                        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                    }
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 }

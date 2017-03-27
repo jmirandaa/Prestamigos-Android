@@ -1,9 +1,5 @@
 package es.jma.prestamigos;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -41,10 +37,11 @@ import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
 import static es.jma.prestamigos.DeudasOtrosFragment.TIPO_DEUDA;
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
 
 /**
- * FALTA:
- * - Probar con email
+ * Nueva deuda
+ * Created by jmiranda
  */
 
 public class NuevaDeudaActivity extends BaseActivity {
@@ -185,7 +182,7 @@ public class NuevaDeudaActivity extends BaseActivity {
         }
         else
         {
-            showProgress(true);
+            showProgress(true, mView, mProgressView, this);
 
             String emailOrigen = UtilUI.getEmail(this);
             //Email
@@ -227,7 +224,7 @@ public class NuevaDeudaActivity extends BaseActivity {
 
         if ((email != null) && (!email.isEmpty())) {
             //Cargar amigos
-            showProgress(true);
+            showProgress(true, mView, mProgressView, this);
 
             //Llamada
             comando.ejecutar(email);
@@ -258,7 +255,7 @@ public class NuevaDeudaActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventUsuarios(EventUsuarios event) {
         List<Usuario> usuarios = event.getUsuarios();
-        showProgress(false);
+        showProgress(false, mView, mProgressView, this);
 
         //Si es error de conexión
         if (event.getCodigo() == -1)
@@ -289,14 +286,14 @@ public class NuevaDeudaActivity extends BaseActivity {
         //Si es error de conexión
         if (event.getCodigo() == -1)
         {
-            showProgress(false);
+            showProgress(false, mView, mProgressView, this);
             Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
                     .show();
         }
         //En caso contrario, actualizar listado amigos
         else if (amigo == -1)
         {
-            showProgress(false);
+            showProgress(false, mView, mProgressView, this);
             Snackbar.make(coordinatorLayout, getResources().getText(R.string.msg_error_conexion), Snackbar.LENGTH_LONG)
                     .show();
         }
@@ -330,7 +327,7 @@ public class NuevaDeudaActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventDeudas(EventDeudas event) {
         List<Deuda> deudas = event.getDeudas();
-        showProgress(false);
+        showProgress(false, mView, mProgressView, this);
 
         //Si es error de conexión
         if (event.getCodigo() == -1)
@@ -348,40 +345,4 @@ public class NuevaDeudaActivity extends BaseActivity {
 
     };
 
-    /**
-     * Ocultar formulario
-     * @param show
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 }

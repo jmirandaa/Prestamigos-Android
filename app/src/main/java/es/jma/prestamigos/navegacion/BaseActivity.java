@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 /**
- * Created by tulon on 6/02/17.
+ * Sobrescritura de Activity para incluir ButterKnife y simplificar acciones
+ * Created by jmiranda on 6/02/17.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

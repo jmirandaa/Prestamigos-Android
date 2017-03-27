@@ -4,11 +4,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
- * Created by tulon on 15/02/17.
+ * Clase abstracta que define lo necesario para hacer llamadas a través
+ * de RetroFit
+ * Created by jmiranda on 15/02/17.
  */
 
 public abstract class Comando {
-    public static final String URL_BASE = "http://lyxeon.es:8080/prestamos/";
+    public static final String URL_BASE = "http://lyxeon.es:8080/prestamos/"; //En producción debería usarse una conexión segura https
     protected int pantalla;
 
     protected Comando(int pantalla)

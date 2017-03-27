@@ -21,6 +21,9 @@ import es.jma.prestamigos.constantes.KShared;
 import es.jma.prestamigos.navegacion.BaseActivity;
 import es.jma.prestamigos.utils.ui.UtilUI;
 
+/**
+ * Menú principal
+ */
 public class PrincipalActivity extends BaseActivity
         implements PerfilFragment.OnFragmentInteractionListener, HistorialFragment.OnFragmentInteractionListener, DashboardFragment.OnFragmentInteractionListener, AmigosFragment.OnFragmentInteractionListener, DeudasOtrosFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 

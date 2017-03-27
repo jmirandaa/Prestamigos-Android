@@ -1,20 +1,14 @@
 package es.jma.prestamigos;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -37,27 +31,23 @@ import java.util.List;
 
 import butterknife.BindView;
 import es.jma.prestamigos.adaptadores.AmigosAdapter;
-import es.jma.prestamigos.adaptadores.DeudaAdapter;
 import es.jma.prestamigos.comandos.AmigosComando;
 import es.jma.prestamigos.comandos.Comando;
-import es.jma.prestamigos.comandos.NuevoAmigoComando;
 import es.jma.prestamigos.comandos.NuevoInvitadoComando;
 import es.jma.prestamigos.constantes.KPantallas;
 import es.jma.prestamigos.constantes.KReqCode;
-import es.jma.prestamigos.dominio.Deuda;
 import es.jma.prestamigos.dominio.Usuario;
 import es.jma.prestamigos.eventbus.EventAmigo;
 import es.jma.prestamigos.eventbus.EventUsuarios;
 import es.jma.prestamigos.navegacion.BaseFragment;
-import es.jma.prestamigos.utils.ui.UtilTextValidator;
 import es.jma.prestamigos.utils.ui.UtilUI;
+
+import static es.jma.prestamigos.utils.ui.UtilUI.showProgress;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AmigosFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
+ * Amigos
+ * Created by jmiranda
  */
 public class AmigosFragment extends BaseFragment {
 
@@ -112,7 +102,7 @@ public class AmigosFragment extends BaseFragment {
         //Conectarse
         if ((email != null) && (!email.isEmpty()))
         {
-            showProgress(true);
+            showProgress(true, rv, mProgressView, getContext());
             amigos.ejecutar(email);
         }
     }
@@ -151,7 +141,7 @@ public class AmigosFragment extends BaseFragment {
             adapter.notifyDataSetChanged();
         }
 
-        showProgress(false);
+        showProgress(false, rv, mProgressView, getContext());
 
     };
 
@@ -175,7 +165,7 @@ public class AmigosFragment extends BaseFragment {
             actualizarAmigos();
         }
 
-        showProgress(false);
+        showProgress(false, rv, mProgressView, getContext());
 
     };
 
@@ -252,7 +242,7 @@ public class AmigosFragment extends BaseFragment {
                         String emailOrigen = UtilUI.getEmail(getContext());
                         Comando nuevoAmigo = new NuevoInvitadoComando(KPantallas.PANTALLA_AMIGOS);
                         nuevoAmigo.ejecutar(usuario, emailOrigen);
-                        showProgress(true);
+                        showProgress(true, rv, mProgressView, getContext());
                     }
                 });
 
@@ -360,43 +350,6 @@ public class AmigosFragment extends BaseFragment {
             if (resultCode == DetallesAmigoActivity.RESULT_OK) {
                 actualizarAmigos();
             }
-        }
-    }
-
-    /**
-     * Progreso
-     * @param show
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            rv.setVisibility(show ? View.GONE : View.VISIBLE);
-            rv.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    rv.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            rv.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 

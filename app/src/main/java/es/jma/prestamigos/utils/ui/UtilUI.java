@@ -13,7 +13,8 @@ import android.view.View;
 import es.jma.prestamigos.constantes.KShared;
 
 /**
- * Created by tulon on 4/02/17.
+ * Clase de utilidad para la UI y SharedPreferences
+ * Created by jmiranda on 4/02/17.
  */
 
 public class UtilUI {
@@ -99,5 +100,45 @@ public class UtilUI {
         nombre = shared.getString(KShared.CLAVE_NOMBRE,"");
 
         return nombre;
+    }
+
+    /**
+     * Mostrar barra de progreso
+     * @param show
+     * @param mView
+     * @param mProgressView
+     * @param context
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public static void showProgress(final boolean show, final View mView, final View mProgressView, Context context) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = context.getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+            mView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            mView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 }

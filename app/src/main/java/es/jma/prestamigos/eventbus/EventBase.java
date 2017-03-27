@@ -1,7 +1,8 @@
 package es.jma.prestamigos.eventbus;
 
 /**
- * Created by tulon on 13/02/17.
+ * Información común pasada a los eventos de EventBus
+ * Created by jmiranda on 13/02/17.
  */
 
 public class EventBase {

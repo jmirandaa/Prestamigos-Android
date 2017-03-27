@@ -1,7 +1,7 @@
 package es.jma.prestamigos.constantes;
 
 /**
- * Mensajes de error
+ * Constantes de los mensajes de error
  * Created by jmiranda on 9/03/17.
  */
 

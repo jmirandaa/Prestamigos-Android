@@ -9,7 +9,8 @@ import java.util.List;
 import es.jma.prestamigos.enums.TipoOperacion;
 
 /**
- * Created by tulon on 8/02/17.
+ * POJO Operacion
+ * Created by jmiranda on 8/02/17.
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)

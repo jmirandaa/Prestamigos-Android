@@ -12,6 +12,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
+ * Interfaz Retrofit de operaciones de las deudas
  * Created by jmiranda on 16/02/17.
  */
 

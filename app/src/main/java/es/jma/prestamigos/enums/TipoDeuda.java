@@ -1,7 +1,8 @@
 package es.jma.prestamigos.enums;
 
 /**
- * Created by tulon on 8/02/17.
+ * Enum sobre el tipo de deudas
+ * Created by jmiranda on 8/02/17.
  */
 
 public enum TipoDeuda {

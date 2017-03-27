@@ -26,3 +26,17 @@
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+
+-dontwarn okio.**
+
+#Proguard
+-keepattributes *Annotation*,EnclosingMethod,Signature
+-keepnames class com.fasterxml.jackson.** { *; }
+ -dontwarn com.fasterxml.jackson.databind.**
+ -keep class org.codehaus.** { *; }
+ -keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
+ public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
+-keep public class your.class.** {
+  public void set*(***);
+  public *** get*();
+}

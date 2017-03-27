@@ -14,7 +14,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 15/02/17.
+ * Hacer la llamada para comprobar los datos de login
+ * Created by jmiranda on 15/02/17.
  */
 
 public class LoginComando extends Comando implements Callback<RespuestaREST<Usuario>> {

@@ -3,6 +3,7 @@ package es.jma.prestamigos.dominio;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
+ * POJO ResumenDeuda
  * Created by jmiranda on 6/03/17.
  */
 

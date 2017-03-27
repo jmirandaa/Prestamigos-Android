@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by tulon on 16/02/17.
+ * Clase de utilidad para manejar fechas
+ * Created by jmiranda on 16/02/17.
  */
 
 public class UtilFechas {

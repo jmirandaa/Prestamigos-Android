@@ -14,7 +14,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by tulon on 7/02/17.
+ * Sobrescritura de Fragment para incluir ButterKnife y simplificar acciones
+ * Created by jmiranda on 7/02/17.
  */
 
 public class BaseFragment extends Fragment {

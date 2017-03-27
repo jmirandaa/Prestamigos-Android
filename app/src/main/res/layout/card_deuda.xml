@@ -26,7 +26,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="220dp"
-                android:layout_marginLeft="220dp" />
+                android:layout_marginLeft="220dp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:orientation="vertical"

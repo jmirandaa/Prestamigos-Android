@@ -13,7 +13,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 21/02/17.
+ * Hacer la llamada para crear un nuevo amigo invitado
+ * Created by jmiranda on 21/02/17.
  */
 
 public class NuevoInvitadoComando extends Comando implements Callback<RespuestaREST<Long>> {

@@ -1,7 +1,8 @@
 package es.jma.prestamigos.constantes;
 
 /**
- * Created by tulon on 15/02/17.
+ * Otras constantes compartidas
+ * Created by jmiranda on 15/02/17.
  */
 
 public class KShared {

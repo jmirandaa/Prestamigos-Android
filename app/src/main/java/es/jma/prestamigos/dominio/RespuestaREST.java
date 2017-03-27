@@ -1,7 +1,8 @@
 package es.jma.prestamigos.dominio;
 
 /**
- * Created by tulon on 13/02/17.
+ * POJO de respuesta devuelta por el servidor
+ * Created by jmiranda on 13/02/17.
  */
 
 public class RespuestaREST <T>{

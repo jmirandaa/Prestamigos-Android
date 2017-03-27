@@ -13,7 +13,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Created by tulon on 6/03/17.
+ * Hacer la llamada para obtener el resumen de las deudas
+ * Created by jmiranda on 6/03/17.
  */
 
 public class ResumenComando extends Comando implements Callback<RespuestaREST<ResumenDeuda>> {

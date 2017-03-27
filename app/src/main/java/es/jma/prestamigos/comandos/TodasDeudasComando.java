@@ -17,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
- * Todas las deudas
+ * Hacer la llamada para obtener todas las deudas
  * Created by jmiranda on 15/02/17.
  */
 
