@@ -23,6 +23,27 @@ La aplicación permite:
 
 Aunque en este proyecto no se usa al no hacer un uso intensivo de imágenes, Glide (https://github.com/bumptech/glide) también es muy recomendado para el manejo de imágenes, sobretodo dentro de RecyclerViews.
 
+### Estructura del proyecto
+
+Dentro de app -> src -> main -> java -> es.jma.prestamigos
+
+| Paquete | Descripción |
+| ------ | ------ |
+| / | Actividades y fragmentos|
+| adaptadores | Implementación de los Adapter usados por los RecyclerView|
+| comandos | Peticiones HTTP a los servicios|
+| conexiones | Definición de las interfaces usadas por RetroFit|
+| constantes | Clases con atributos usados como constantes|
+| dominio | Dominio de la aplicación (POJOs) |
+| enums | Enums de la aplicación |
+| eventbus | Definición de los eventos usados por EventBus |
+| filtros | Filtros usados por los Adapter |
+| navegacion | Definición de BaseActivity y BaseFragment |
+| utils.ui | Clases con métodos estáticos de utilidad |
+
+
+La pantalla principal es de la Login (LoginActivity).
+
 Licencia de uso
 ----
 
