@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Prestamigos.iml" filepath="$PROJECT_DIR$/Prestamigos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Prestamigos-Android.iml" filepath="$PROJECT_DIR$/Prestamigos-Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -34,12 +34,18 @@ public class Usuario {
     public Usuario(long id)
     {
         this.id = id;
+        this.email = "email@email.com";
+        this.nombre = "NOMBRE";
+        this.apellidos = "APELLIDOS";
+        this.password = "PASSWORD";
     }
 
     public Usuario(String nombre, String apellidos)
     {
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.email = "email@email.com";
+        this.password = "PASSWORD";
     }
 
     public Usuario(String nombre, String apellidos, String email, String password)

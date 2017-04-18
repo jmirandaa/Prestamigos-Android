@@ -313,12 +313,13 @@ public class DeudaAdapter extends RecyclerView.Adapter<DeudaAdapter.DeudaViewHol
                     Editable valor = etCantidad.getText();
                     if ((valor != null) && (!valor.toString().isEmpty())) {
                         //Crear operacion
+                        Usuario usuario = new Usuario(UtilUI.getIdUsuario(dialogView.getContext()));
                         Operacion operacion = new Operacion();
                         double cantidad = Double.parseDouble(valor.toString());
                         operacion.setCantidad(cantidad);
                         operacion.setDeuda(deuda);
                         operacion.setTipo(tipoFinal);
-                        operacion.setUsuario(new Usuario(UtilUI.getIdUsuario(dialogView.getContext())));
+                        operacion.setUsuario(usuario);
 
                         //LLamar al servicio
                         Comando comando = new NuevaOpComando(KPantallas.PANTALLA_DEUDAS_OTROS);
